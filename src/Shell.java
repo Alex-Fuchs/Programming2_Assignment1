@@ -32,7 +32,7 @@ public final class Shell {
     /**
      * Liest Befehle inkl. Parameter des Benutzers ein, reagiert auf Befehle
      * mit einer Fehlerausgabe oder leitet diese ggf. mit Parameter weiter.
-     * Die Parameter werden erst nach Weiterleitung geprüft.
+     * Die Parameter werden erst nach Weiterleitung geprüft
      * @param stdin : BufferedReader aus der main Methode,
      *              wird zum Einlesen der Befehle verwendet
      * @throws IOException : Falls I/O Probleme bei dem Benutzer bestehen,
@@ -40,6 +40,7 @@ public final class Shell {
      */
     private static void execute(BufferedReader stdin) throws IOException {
         boolean quit = false;
+        Field field = new Field();
 
         while (!quit) {
             System.out.print("cp> ");

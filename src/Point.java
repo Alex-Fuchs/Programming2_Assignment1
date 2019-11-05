@@ -6,32 +6,32 @@
 
 public class Point implements Comparable <Point> {
 
-    private double x;       // x-Wert des 2D Punktes
-    private double y;       // y-Wert des 2D Punktes
+    private int x;      // x-Wert des 2D Punktes
+    private int y;      // y-Wert des 2D Punktes
 
     /**
-     * Öffentlicher Konstruktor der Klasse Point
+     * Öffentlicher Konstruktor
      * @param x : x-Wert des 2D Punktes
      * @param y : y-Wert des 2D Punktes
      */
-    public Point(double x, double y) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
     /**
-     * Rückgabefunktion
+     * Rückgabemethode
      * @return x : x-Wert des Punktes
      */
-    private double getX() {
+    private int getX() {
         return x;
     }
 
     /**
-     * Rückgabefunktion
+     * Rückgabemethode
      * @return y : y-Wert des Punktes
      */
-    private double getY() {
+    private int getY() {
         return y;
     }
 
@@ -53,21 +53,31 @@ public class Point implements Comparable <Point> {
             return -1;
         } else if (y > other.getY()) {
             return 1;
+        } else {
+            return 0;
         }
-        return 0;
     }
 
     /**
-     * Prüft Gleichheit auf x- und y-Wert
+     * Prüft Gleichheit der Punkte auf x- und y-Wert
      * @param other : Punkt wird mit dem Punkt other verglichen
-     * @return boolean : true wird zurückgegeben, falls this = other
-     *                   false wird zurückgegeben, falls this != other
+     * @return boolean : true wird bei Gleichheit zurückgegeben
+     *                   false andernfalls
      */
     @Override
     public boolean equals(Object other) {
-        if ((other instanceof Point) && (compareTo( (Point) other) == 0)) {
-            return true;
-        }
-        return false;
+        return (other instanceof Point && compareTo( (Point) other) == 0);
+    }
+
+    /**
+     * Berechnet die euklidische Distanz von 2 Punkten
+     * @param other : Punkt wird mit dem Punkt other verrechnet
+     * @return : Distanz der Punkte
+     */
+    public double distance(Point other) {
+        double xLength = x - other.getX();
+        double yLength = y - other.getY();
+
+        return Math.sqrt(xLength * xLength + yLength * yLength);
     }
 }
