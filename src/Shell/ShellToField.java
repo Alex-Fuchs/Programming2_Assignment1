@@ -1,12 +1,16 @@
 /**
- * ShellToField Hilfsklasse
+ * Shell.ShellToField Hilfsklasse
  *
  * Version:
  */
 
-public final class ShellToField {
+package Shell;
 
-    private static Field field = new Field();         //Field des Programms
+import Field.Field;
+
+final class ShellToField {
+
+    private static Field field = new Field();            //Field des Programms
 
     /**
      * Privater Konstruktor der Klasse Shell,
@@ -15,19 +19,19 @@ public final class ShellToField {
     private ShellToField() { }
 
     /**
-     * Setzt das Field vollständig zurück
+     * Setzt das Field.Field vollständig zurück
      */
-    public static void newField() {
+    static void newField() {
         field = new Field();
     }
 
     /**
-     * Fügt den Punkt (x, y) dem Field hinzu. Falls dieser schon existiert
+     * Fügt den Punkt (x, y) dem Field.Field hinzu. Falls dieser schon existiert
      * oder Parameter fehlerhaft sind, wird ein Fehler in der Konsole
      * ausgegeben
      * @param tokens : String array der Parameter als Strings
      */
-    public static void add(String[] tokens) {
+    static void add(String[] tokens) {
         Integer[] parameters = checkParameters(tokens);
         if (parameters != null) {
             int x = parameters[0];
@@ -35,18 +39,18 @@ public final class ShellToField {
             boolean added = field.add(x, y);
 
             if (!added) {
-                printError("Point already added!");
+                printError("Field.Point already added!");
             }
         }
     }
 
     /**
-     * Entfernt den Punkt (x, y) aus dem Field. Falls dieser nicht existiert
+     * Entfernt den Punkt (x, y) aus dem Field.Field. Falls dieser nicht existiert
      * oder Parameter fehlerhaft sind, wird ein Fehler in der Konsole
      * ausgegeben
      * @param tokens : String array der Parameter als Strings
      */
-    public static void remove(String[] tokens) {
+    static void remove(String[] tokens) {
         Integer[] parameters = checkParameters(tokens);
         if (parameters != null) {
             int x = parameters[0];
@@ -54,7 +58,7 @@ public final class ShellToField {
             boolean removed = field.remove(x, y);
 
             if (!removed) {
-                printError("Point has not been added before!");
+                printError("Field.Point has not been added before!");
             }
         }
     }
@@ -62,7 +66,7 @@ public final class ShellToField {
     /**
      * Gibt alle Punkte des Fields in der Konsole aus.
      */
-    public static void print() {
+    static void print() {
         String allPoints = field.print();
         System.out.println(allPoints);
     }
@@ -72,7 +76,7 @@ public final class ShellToField {
      * aus. Falls diese nicht existiert, wird ein Fehler in der Konsole
      * ausgegeben
      */
-    public static void distance() {
+    static void distance() {
         String result = field.distance();
         if (result == null) {
             printError("Less than 2 points in the field!");
@@ -84,7 +88,7 @@ public final class ShellToField {
     /**
      * Gibt alle möglichen Kommandos in der Konsole aus
      */
-    public static void help() {
+    static void help() {
         String[] commands = {"Following commands supported:",
                 "h: prints all commands",
                 "q: system quit",
@@ -97,6 +101,15 @@ public final class ShellToField {
         for (String tmp: commands) {
             System.out.println(tmp);
         }
+    }
+
+    /**
+     * Gibt eine spezielle Fehlernachricht in der Konsole aus
+     * @param message : Spezialisierung des Fehlers
+     */
+    static void printError(String message) {
+        String errorMessage = "Error!";
+        System.out.println(errorMessage + " " + message);
     }
 
     /**
@@ -118,14 +131,5 @@ public final class ShellToField {
             }
         }
         return parameters;
-    }
-
-    /**
-     * Gibt eine spezielle Fehlernachricht in der Konsole aus
-     * @param message : Spezialisierung des Fehlers
-     */
-    public static void printError(String message) {
-        String errorMessage = "Error!";
-        System.out.println(errorMessage + " " + message);
     }
 }

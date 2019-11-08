@@ -1,8 +1,10 @@
 /**
- * Pair
+ * Field.Pair
  *
  * Version:
  */
+
+package Field;
 
 public class Pair implements Comparable<Pair> {
 
@@ -17,7 +19,7 @@ public class Pair implements Comparable<Pair> {
      * @param newFirst : Erste 2D Punkt des Paares
      * @param newSecond : Zweite 2D Punkt des Paares
      */
-    public Pair(Point newFirst, Point newSecond) {
+    Pair(Point newFirst, Point newSecond) {
         if (newFirst.compareTo(newSecond) <= 0) {
             first = newFirst;
             second = newSecond;

@@ -1,8 +1,10 @@
 /**
- * IdentDistPairs
+ * Field.IdentDistPairs
  *
  * Version:
  */
+
+package Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +16,7 @@ public class IdentDistPairs {
     private List <Pair> pairs;                  //Paare mit dieser Distanz
 
 
-    public IdentDistPairs(double newDistance, Point first, Point second) {
+    IdentDistPairs(double newDistance, Point first, Point second) {
         pairs = new ArrayList<Pair>();
         setDistance(newDistance, first, second);
     }
@@ -26,7 +28,7 @@ public class IdentDistPairs {
      * @param first : zum Paar zugehörigerer erster Punkt
      * @param second : zum Paar zugehöriger zweiter Punkt
      */
-    public void newPairDistance(double newDistance, Point first, Point second) {
+    void newPairDistance(double newDistance, Point first, Point second) {
             int comparison = compareDistances(newDistance);
             if (comparison == 1) {
                 pairs.clear();
@@ -43,7 +45,7 @@ public class IdentDistPairs {
      * @param other : IdentDistPairs wird mit other verglichen
      * @return : IdentDistPairs mit kleinerer Distanz
      */
-    public IdentDistPairs compareTo(IdentDistPairs other) {
+    IdentDistPairs compareTo(IdentDistPairs other) {
         int comparison = compareDistances(other.getDistance());
         if (comparison < 0) {
             return this;

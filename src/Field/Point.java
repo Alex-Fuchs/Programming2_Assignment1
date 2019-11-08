@@ -1,20 +1,22 @@
 /**
- * Point
+ * Field.Point
  *
  * Version:
  */
 
+package Field;
+
 public class Point implements Comparable <Point> {
 
-    private int x;      // x-Wert des 2D Punktes
-    private int y;      // y-Wert des 2D Punktes
+    private int x;                      // x-Wert des 2D Punktes
+    private int y;                      // y-Wert des 2D Punktes
 
     /**
      * Öffentlicher Konstruktor
      * @param newX : x-Wert des 2D Punktes
      * @param newY : y-Wert des 2D Punktes
      */
-    public Point(int newX, int newY) {
+    Point(int newX, int newY) {
         x = newX;
         y = newY;
     }
@@ -50,7 +52,7 @@ public class Point implements Comparable <Point> {
      *              -1 wird zurückgegeben, falls this < other
      *               0 wird zurückgegeben, falls this = other
      */
-    public int compareToY(Point other) {
+    int compareToY(Point other) {
         if (y < other.getY()) {
             return -1;
         } else if (y > other.getY()) {
@@ -80,7 +82,7 @@ public class Point implements Comparable <Point> {
      * @param other : Punkt wird mit dem Punkt other verrechnet
      * @return : Distanz der Punkte
      */
-    public double distance(Point other) {
+    double distance(Point other) {
         double xLength = x - other.getX();
         double yLength = y - other.getY();
 

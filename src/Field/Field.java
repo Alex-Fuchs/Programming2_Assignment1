@@ -1,8 +1,10 @@
 /**
- * Field
+ * Field.Field
  *
  * Version:
  */
+
+package Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +12,7 @@ import java.util.List;
 
 public class Field {
 
-    private List <Point> points;                //Punkte des Fields
+    private List <Point> points;                    //Punkte des Fields
     private IdentDistPairs identDistPairs;
 
     public Field() {

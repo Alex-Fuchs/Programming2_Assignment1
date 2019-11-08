@@ -1,8 +1,10 @@
 /**
- * Shell
+ * Shell.Shell
  *
  * Version:
  */
+
+package Shell;
 
 import java.io.IOException;
 import java.io.BufferedReader;
