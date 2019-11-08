@@ -40,14 +40,13 @@ public final class Shell {
      */
     private static void execute(BufferedReader stdin) throws IOException {
         boolean quit = false;
-        Field field = new Field();
 
         while (!quit) {
             System.out.print("cp> ");
             String input = stdin.readLine();
 
             if (input == null || input.equals("")) {
-                System.out.println("Error! Please enter a command!");
+                ShellToField.printError("Please enter a command!");
                 continue;
             }
 
@@ -56,22 +55,38 @@ public final class Shell {
 
             switch (tokens[0]) {
             case "n":
+                ShellToField.newField();
                 break;
             case "h":
+                ShellToField.help();
                 break;
             case "q":
                 quit = true;
                 break;
             case "a":
+                if (tokens.length >= 3) {
+                    String[] parametersForAdd = {tokens[1], tokens[2]};
+                    ShellToField.add(parametersForAdd);
+                } else {
+                    ShellToField.printError("Not enough parameters!");
+                }
                 break;
             case "r":
+                if (tokens.length >= 3) {
+                    String[] parametersForRemove = {tokens[1], tokens[2]};
+                    ShellToField.remove(parametersForRemove);
+                } else {
+                    ShellToField.printError("Not enough parameters!");
+                }
                 break;
             case "p":
+                ShellToField.print();
                 break;
             case "d":
+                ShellToField.distance();
                 break;
             default:
-                System.out.println("Error! Type help for Overview!");
+                ShellToField.printError("Type help for overview!");
                 break;
             }
         }

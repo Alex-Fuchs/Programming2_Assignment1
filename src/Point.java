@@ -11,28 +11,12 @@ public class Point implements Comparable <Point> {
 
     /**
      * Öffentlicher Konstruktor
-     * @param x : x-Wert des 2D Punktes
-     * @param y : y-Wert des 2D Punktes
+     * @param newX : x-Wert des 2D Punktes
+     * @param newY : y-Wert des 2D Punktes
      */
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    /**
-     * Rückgabemethode
-     * @return x : x-Wert des Punktes
-     */
-    private int getX() {
-        return x;
-    }
-
-    /**
-     * Rückgabemethode
-     * @return y : y-Wert des Punktes
-     */
-    private int getY() {
-        return y;
+    public Point(int newX, int newY) {
+        x = newX;
+        y = newY;
     }
 
     /**
@@ -52,6 +36,28 @@ public class Point implements Comparable <Point> {
         } else if (y < other.getY()) {
             return -1;
         } else if (y > other.getY()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Vergleicht die Punkte lexikographisch nach den y-Wert
+     * und bei Gleichheit auf den x-Wert
+     * @param other : Punkt wird mit dem Punkt other verglichen
+     * @return int : 1 wird zurückgegeben, falls this > other
+     *              -1 wird zurückgegeben, falls this < other
+     *               0 wird zurückgegeben, falls this = other
+     */
+    public int compareToY(Point other) {
+        if (y < other.getY()) {
+            return -1;
+        } else if (y > other.getY()) {
+            return 1;
+        } else if (x < other.getX()) {
+            return -1;
+        } else if (x > other.getX()) {
             return 1;
         } else {
             return 0;
@@ -79,5 +85,30 @@ public class Point implements Comparable <Point> {
         double yLength = y - other.getY();
 
         return Math.sqrt(xLength * xLength + yLength * yLength);
+    }
+
+    /**
+     * Gibt die Darstellung des Punktes zurück
+     * @return String : Visualisierung (x, y)
+     */
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+
+    /**
+     * Rückgabemethode
+     * @return x : x-Wert des Punktes
+     */
+    private int getX() {
+        return x;
+    }
+
+    /**
+     * Rückgabemethode
+     * @return y : y-Wert des Punktes
+     */
+    private int getY() {
+        return y;
     }
 }

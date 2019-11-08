@@ -14,33 +14,17 @@ public class Pair implements Comparable<Pair> {
      * Öffentlicher Konstruktor
      * Es wird sichergestellt, dass in dem Paar (erster Punkt, zweiter Punkt)
      * der erste Punkt <= dem zweiten Punkt gilt
-     * @param first : Erste 2D Punkt des Paares
-     * @param second : Zweite 2D Punkt des Paares
+     * @param newFirst : Erste 2D Punkt des Paares
+     * @param newSecond : Zweite 2D Punkt des Paares
      */
-    public Pair(Point first, Point second) {
-        if (first.compareTo(second) <= 0) {
-            this.first = first;
-            this.second = second;
+    public Pair(Point newFirst, Point newSecond) {
+        if (newFirst.compareTo(newSecond) <= 0) {
+            first = newFirst;
+            second = newSecond;
         } else {
-            this.first = second;
-            this.second = first;
+            first = newSecond;
+            second = newFirst;
         }
-    }
-
-    /**
-     * Rückgabemethode
-     * @return : Der erste Punkt des 2-Tupels
-     */
-    private Point getFirst() {
-        return first;
-    }
-
-    /**
-     * Rückgabemethode
-     * @return : Der zweite Punkt des 2-Tupels
-     */
-    private Point getSecond() {
-        return second;
     }
 
     /**
@@ -64,5 +48,31 @@ public class Pair implements Comparable<Pair> {
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Gibt die Darstellung des Paares zurück
+     * @return String : Visualisierung first - second
+     *                bzw. (x, y) - (x, y)
+     */
+    @Override
+    public String toString() {
+        return first.toString() + " - " + second.toString();
+    }
+
+    /**
+     * Rückgabemethode
+     * @return : Der erste Punkt des 2-Tupels
+     */
+    private Point getFirst() {
+        return first;
+    }
+
+    /**
+     * Rückgabemethode
+     * @return : Der zweite Punkt des 2-Tupels
+     */
+    private Point getSecond() {
+        return second;
     }
 }

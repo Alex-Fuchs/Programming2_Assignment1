@@ -5,59 +5,110 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class IdentDistPairs {
 
-    private Double distance;                    //momentane kurzeste Distanz
-    private List <Pair> shortestDistance;       //Paare mit dieser Distanz
+    private double distance;                    //momentane kurzeste Distanz
+    private List <Pair> pairs;                  //Paare mit dieser Distanz
 
-    /**
-     * Öffentlicher Konstruktor
-     */
-    public IdentDistPairs() {
-        shortestDistance = new ArrayList<Pair>();
+
+    public IdentDistPairs(double newDistance, Point first, Point second) {
+        pairs = new ArrayList<Pair>();
+        setDistance(newDistance, first, second);
     }
 
     /**
      * Setzt die Liste auf die bisher bekannten Paaren dieser Distanz und
-     * ersetzt die alte Distanz, falls eine kleinere gefunden wird
-     * @param distance : momentan kürzeste Distanz des Fields
+     * ersetzt die alte Distanz, falls eine kleinere gefunden wird.
+     * @param newDistance : momentan kürzeste Distanz des Fields
      * @param first : zum Paar zugehörigerer erster Punkt
      * @param second : zum Paar zugehöriger zweiter Punkt
      */
-    public void checkDistance(double distance, Point first, Point second) {
-        int comparison = compareDoubles(distance);
+    public void newPairDistance(double newDistance, Point first, Point second) {
+            int comparison = compareDistances(newDistance);
+            if (comparison == 1) {
+                pairs.clear();
+                setDistance(newDistance, first, second);
+            } else if (comparison == 0) {
+                pairs.add(new Pair(first, second));
+            }
+    }
 
-        if (this.distance == null || comparison == -1) {
-            this.distance = distance;
-            shortestDistance.clear();
-            shortestDistance.add(new Pair(first, second));
-        } else if (comparison == 0) {
-            shortestDistance.add(new Pair(first, second));
+    /**
+     * Vergleicht zwei identDistPairs aus unterschiedlichen Feldern auf deren
+     * Distanz und gibt das identDistPairs mit der Kleineren zurück. Bei
+     * Gleichheit werden diese verschmolzen
+     * @param other : IdentDistPairs wird mit other verglichen
+     * @return : IdentDistPairs mit kleinerer Distanz
+     */
+    public IdentDistPairs compareTo(IdentDistPairs other) {
+        int comparison = compareDistances(other.getDistance());
+        if (comparison < 0) {
+            return this;
+        } else if (comparison > 0) {
+            return other;
+        } else {
+            return merge(other.getPairs());
         }
     }
 
     /**
-     * Rückgabemethode
-     * @return distance : momentane kürzeste Distanz von einem Paar
+     * Gibt die Darstellung des identdistPairs zurück
+     * @return String : String mit der Darstellung
      */
-    public Double getDistance() {
-        return distance;
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        double distanceRounded = Math.round(distance * 100) / 100d;
+
+        String[] toAppend = {"distance: ", String.valueOf(distanceRounded), "\n", "pairs: "};
+        for (String tmp: toAppend) {
+            stringBuilder.append(tmp);
+        }
+
+        sortPairs();
+        for (int i = 0; i < pairs.size(); i++) {
+            stringBuilder.append(pairs.get(i).toString());
+
+            if(i < pairs.size() - 1) {
+                stringBuilder.append(", ");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Hilfsmethode für den Spezialfall des Mergen der identDistPairs.
+     * Paar Duplikate nicht möglich, da 2 Punkte nur aus dem selben Feld sein
+     * können
+     * @param otherPairs : Liste der Paare von der anderen identDistPairs
+     * @return this mit der verschmolzenen Paarliste
+     */
+    private IdentDistPairs merge(List <Pair> otherPairs) {
+        pairs.addAll(otherPairs);
+        return this;
+    }
+
+    /**
+     * Sortiert die Paare lexikographisch nach ersten und bei Gleichheit auf
+     * zweiten Punkt. Punkte werden lexikographisch nach x-Wert und bei
+     * Gleichheit auf y-Wert sortiert
+     */
+    private void sortPairs() {
+        Collections.sort(pairs);
     }
 
     /**
      * Vergleicht zwei double auf eine Unschärfe von 0.000001 Radius.
-     * Falls der Double distance noch nicht gesetzt wurde, wird dieser hier
-     * gesetzt
      * @param other : Double distance wird mit dem double other verglichen
      * @return int : 1 wird zurückgegeben, falls distance > other
      *              -1 wird zurückgegeben, falls distance < other
      *               0 wird zurückgegeben, falls distance = other
      */
-    private int compareDoubles(double other) {
+    private int compareDistances(double other) {
         double epsilon = 0.000001;
-
         if (distance <= (other + epsilon) && distance >= (other - epsilon)) {
             return 0;
         } else if (distance > other) {
@@ -65,5 +116,32 @@ public class IdentDistPairs {
         } else {
             return -1;
         }
+    }
+
+    /**
+     * Setzmethode der Distanz, nur mit einem Paar möglich
+     * @param newDistance : neue kürzere Distanz
+     * @param first : erster Punkt des Paares
+     * @param second : zweiter Punkt des Paares
+     */
+    private void setDistance(double newDistance, Point first, Point second) {
+        distance = newDistance;
+        pairs.add(new Pair(first, second));
+    }
+
+    /**
+     * Rückgabemethode
+     * @return distance : momentane kürzeste Distanz von einem Paar
+     */
+    private double getDistance() {
+        return distance;
+    }
+
+    /**
+     * Rückgabefunktion
+     * @return : Liste der Paare
+     */
+    private List <Pair> getPairs() {
+        return pairs;
     }
 }

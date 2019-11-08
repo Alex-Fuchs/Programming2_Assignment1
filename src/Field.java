@@ -10,105 +10,105 @@ import java.util.List;
 
 public class Field {
 
-    private List <Point> sortedByX;
-    private List <Point> sortedByY;
+    private List <Point> points;                //Punkte des Fields
     private IdentDistPairs identDistPairs;
 
     public Field() {
-        sortedByX = new ArrayList<Point>();
-        sortedByY = new ArrayList<Point>();
-        identDistPairs = new IdentDistPairs();
+        points = new ArrayList<Point>();
     }
 
     public boolean add(int x, int y) {
-        if (findPoint(x, y) == null) {
-            Point point = new Point(x, y);
-            sortedByX.add(point);
-            sortedByY.add(point);
-            return true;
+        Point toAdd = new Point(x, y);
+        if (!points.contains(toAdd)) {
+            return points.add(new Point(x, y));
         } else {
             return false;
         }
-    }
-
-    private void addSortedByX(Point p) {
-        sortedByX.add(p);
     }
 
     public boolean remove(int x, int y) {
-        Point point = findPoint(x, y);
-        if (point != null) {
-            sortedByX.remove(point);
-            sortedByY.remove(point);
-            return true;
-        } else {
-            return false;
-        }
+        return points.remove(new Point(x, y));
     }
 
     public String print() {
-        return "";
-    }
+        StringBuilder allPoints = new StringBuilder();
+        allPoints.append("points: ");
 
-    public double distance() {
         sortByX();
-        sortByY();
-        setDistance();
-        return identDistPairs.getDistance();
-    }
-
-    private Point findPoint(int x, int y)
-    {
-        Point point = new Point(x, y);
-        for (Point p: sortedByX) {
-            if (p.equals(point)) {
-                return p;
+        for (int i = 0; i < points.size(); i++) {
+            allPoints.append(points.get(i).toString());
+            if(i < points.size() - 1) {
+                allPoints.append(", ");
             }
         }
-        return null;
+        return allPoints.toString();
     }
 
-    private void setDistance() {
-        if (sortedByX.size() > 3) {
+    public String distance() {
+        if (points.size() > 1) {
+            sortByX();
+            List<Point> sortedByY = sortByY();
+            determineDistance(sortedByY);
+            return identDistPairs.toString();
+        } else {
+            return null;
+        }
+    }
+
+    private void determineDistance(List <Point> sortedByY) {
+        if (points.size() > 3) {
             Field left = new Field();
             Field right = new Field();
-            divide(left, right);
+            divideFields(left, right);
 
+            left.determineDistance(sortedByY);
+            right.determineDistance(sortedByY);
+            identDistPairs = left.mergeIdentDistPairs(right);
         } else {
-            determineDistance();
+            calculate();
         }
     }
 
-    private void divide(Field left, Field right) {
-        int rightSize = sortedByX.size() / 2;
-        int leftSize = sortedByX.size() - rightSize;
+    private void divideFields(Field left, Field right) {
+        int rightSize = points.size() / 2;
+        int leftSize = points.size() - rightSize;
 
-        for (int i = 0; i < leftSize; i++) {
-            left.addSortedByX(sortedByX.get(i));
-        }
-
-        for (int i = 0; i < rightSize; i++) {
-            right.addSortedByX(sortedByX.get(i));
-        }
+        left.setPoints(points.subList(0, leftSize));
+        right.setPoints(points.subList(leftSize, points.size()));
     }
 
-    private void determineDistance() {
-        for (int i = 0; i < sortedByX.size(); i++) {
-            for(int j = i + 1; j < sortedByX.size(); j++) {
-                Point first = sortedByX.get(i);
-                Point second = sortedByX.get(j);
+    private void calculate() {
+        for (int i = 0; i < points.size(); i++) {
+            for (int j = i + 1; j < points.size(); j++) {
+                Point first = points.get(i);
+                Point second = points.get(j);
                 double distance = first.distance(second);
 
-                identDistPairs.checkDistance(distance, first, second);
+                if (identDistPairs == null) {
+                    identDistPairs = new IdentDistPairs(
+                            distance, first, second);
+                } else {
+                    identDistPairs.newPairDistance(distance, first, second);
+                }
             }
         }
     }
 
-    public void sortByX() {
-        Collections.sort(sortedByX);
+    private IdentDistPairs mergeIdentDistPairs(Field other) {
+        return identDistPairs.compareTo(other.identDistPairs);
     }
 
-    public void sortByY() {
+    private void setPoints(List <Point> newPoints) {
+        points = newPoints;
+    }
 
+    private void sortByX() {
+        Collections.sort(points);
+    }
+
+    private List <Point> sortByY() {
+        List <Point> sortedByY = points.subList(0, points.size() - 1);
+        Collections.sort(sortedByY, new PointVertComp());
+        return sortedByY;
     }
 }
