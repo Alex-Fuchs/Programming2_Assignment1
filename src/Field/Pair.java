@@ -1,19 +1,19 @@
 /**
- * Field.Pair
+ * Pair
  *
  * Version:
  */
 
 package Field;
 
-public class Pair implements Comparable<Pair> {
+class Pair implements Comparable<Pair> {
 
     // (first, second) Paar von 2D Punkten, first <= second
     private Point first;
     private Point second;
 
     /**
-     * Öffentlicher Konstruktor
+     * Packaged Konstruktor der Klasse Pair
      * Es wird sichergestellt, dass in dem Paar (erster Punkt, zweiter Punkt)
      * der erste Punkt <= dem zweiten Punkt gilt
      * @param newFirst : Erste 2D Punkt des Paares
@@ -54,8 +54,7 @@ public class Pair implements Comparable<Pair> {
 
     /**
      * Gibt die Darstellung des Paares zurück
-     * @return String : Visualisierung first - second
-     *                bzw. (x, y) - (x, y)
+     * @return String : first - second bzw. (x, y) - (x, y)
      */
     @Override
     public String toString() {
@@ -64,7 +63,7 @@ public class Pair implements Comparable<Pair> {
 
     /**
      * Rückgabemethode
-     * @return : Der erste Punkt des 2-Tupels
+     * @return first : Der erste Punkt des 2-Tupels
      */
     private Point getFirst() {
         return first;
@@ -72,7 +71,7 @@ public class Pair implements Comparable<Pair> {
 
     /**
      * Rückgabemethode
-     * @return : Der zweite Punkt des 2-Tupels
+     * @return second : Der zweite Punkt des 2-Tupels
      */
     private Point getSecond() {
         return second;

@@ -1,5 +1,5 @@
 /**
- * Field.IdentDistPairs
+ * IdentDistPairs
  *
  * Version:
  */
@@ -10,12 +10,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class IdentDistPairs {
+class IdentDistPairs {
 
     private double distance;                    //momentane kurzeste Distanz
     private List <Pair> pairs;                  //Paare mit dieser Distanz
 
 
+    /**
+     * Packaged Konstruktor der Klasse IdentDistPairs. Kann nur in
+     * Verbindung mit einem Paar erstellt werden.
+     * @param newDistance : Distanz des ersten hinzugefügten Paares
+     * @param first : zum Paar zugehöriger erster Punkt
+     * @param second : zum Paar zugehöriger zweiter Punkt
+     */
     IdentDistPairs(double newDistance, Point first, Point second) {
         pairs = new ArrayList<Pair>();
         setDistance(newDistance, first, second);
@@ -24,7 +31,7 @@ public class IdentDistPairs {
     /**
      * Setzt die Liste auf die bisher bekannten Paaren dieser Distanz und
      * ersetzt die alte Distanz, falls eine kleinere gefunden wird.
-     * @param newDistance : momentan kürzeste Distanz des Fields
+     * @param newDistance : Distanz eines neuen Paares
      * @param first : zum Paar zugehörigerer erster Punkt
      * @param second : zum Paar zugehöriger zweiter Punkt
      */
@@ -43,7 +50,7 @@ public class IdentDistPairs {
      * Distanz und gibt das identDistPairs mit der Kleineren zurück. Bei
      * Gleichheit werden diese verschmolzen
      * @param other : IdentDistPairs wird mit other verglichen
-     * @return : IdentDistPairs mit kleinerer Distanz
+     * @return IdentDistPairs : mit kleinerer Distanz
      */
     IdentDistPairs compareTo(IdentDistPairs other) {
         int comparison = compareDistances(other.getDistance());
@@ -86,7 +93,7 @@ public class IdentDistPairs {
      * Paar Duplikate nicht möglich, da 2 Punkte nur aus dem selben Feld sein
      * können
      * @param otherPairs : Liste der Paare von der anderen identDistPairs
-     * @return this mit der verschmolzenen Paarliste
+     * @return this : mit der verschmolzenen Paarliste
      */
     private IdentDistPairs merge(List <Pair> otherPairs) {
         pairs.addAll(otherPairs);
@@ -110,8 +117,8 @@ public class IdentDistPairs {
      *               0 wird zurückgegeben, falls distance = other
      */
     private int compareDistances(double other) {
-        double epsilon = 0.000001;
-        if (distance <= (other + epsilon) && distance >= (other - epsilon)) {
+        final double epsilon = 0.000001;
+        if (Math.abs(distance - other) <= epsilon) {
             return 0;
         } else if (distance > other) {
             return 1;
@@ -141,7 +148,7 @@ public class IdentDistPairs {
 
     /**
      * Rückgabefunktion
-     * @return : Liste der Paare
+     * @return pairs : Liste der Paare
      */
     private List <Pair> getPairs() {
         return pairs;

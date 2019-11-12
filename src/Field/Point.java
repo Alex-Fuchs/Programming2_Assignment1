@@ -6,19 +6,21 @@
 
 package Field;
 
-public class Point implements Comparable <Point> {
+class Point implements Comparable <Point> {
 
     private int x;                      // x-Wert des 2D Punktes
     private int y;                      // y-Wert des 2D Punktes
+    private Side side;                  // Seite des Oberfields
 
     /**
-     * Öffentlicher Konstruktor
+     * Packaged Konstruktor der Klasse Point
      * @param newX : x-Wert des 2D Punktes
      * @param newY : y-Wert des 2D Punktes
      */
     Point(int newX, int newY) {
         x = newX;
         y = newY;
+        side = Side.UNSET;
     }
 
     /**
@@ -67,6 +69,22 @@ public class Point implements Comparable <Point> {
     }
 
     /**
+     * Rückgabemethode
+     * @return x : x-Wert des Punktes
+     */
+    int getX() {
+        return x;
+    }
+
+    /**
+     * Setzmethode
+     * @param newSide : Seite des Oberfields
+     */
+    void setSide(Side newSide) {
+        side = newSide;
+    }
+
+    /**
      * Prüft Gleichheit der Punkte auf x- und y-Wert
      * @param other : Punkt wird mit dem Punkt other verglichen
      * @return boolean : true wird bei Gleichheit zurückgegeben
@@ -80,7 +98,7 @@ public class Point implements Comparable <Point> {
     /**
      * Berechnet die euklidische Distanz von 2 Punkten
      * @param other : Punkt wird mit dem Punkt other verrechnet
-     * @return : Distanz der Punkte
+     * @return double : Distanz der Punkte
      */
     double distance(Point other) {
         double xLength = x - other.getX();
@@ -91,7 +109,7 @@ public class Point implements Comparable <Point> {
 
     /**
      * Gibt die Darstellung des Punktes zurück
-     * @return String : Visualisierung (x, y)
+     * @return String : (x, y)
      */
     @Override
     public String toString() {
@@ -99,11 +117,11 @@ public class Point implements Comparable <Point> {
     }
 
     /**
-     * Rückgabemethode
-     * @return x : x-Wert des Punktes
+     * Rückgabefunktion
+     * @return side : Seite des Punktes im Oberfield
      */
-    private int getX() {
-        return x;
+    Side getSide() {
+        return side;
     }
 
     /**

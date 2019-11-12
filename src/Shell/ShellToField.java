@@ -1,5 +1,5 @@
 /**
- * Shell.ShellToField Hilfsklasse
+ * ShellToField Hilfsklasse
  *
  * Version:
  */
@@ -19,14 +19,14 @@ final class ShellToField {
     private ShellToField() { }
 
     /**
-     * Setzt das Field.Field vollständig zurück
+     * Setzt das Field vollständig zurück
      */
     static void newField() {
         field = new Field();
     }
 
     /**
-     * Fügt den Punkt (x, y) dem Field.Field hinzu. Falls dieser schon existiert
+     * Fügt den Punkt (x, y) dem Field hinzu. Falls dieser schon existiert
      * oder Parameter fehlerhaft sind, wird ein Fehler in der Konsole
      * ausgegeben
      * @param tokens : String array der Parameter als Strings
@@ -39,13 +39,13 @@ final class ShellToField {
             boolean added = field.add(x, y);
 
             if (!added) {
-                printError("Field.Point already added!");
+                printError("Point already added!");
             }
         }
     }
 
     /**
-     * Entfernt den Punkt (x, y) aus dem Field.Field. Falls dieser nicht existiert
+     * Entfernt den Punkt (x, y) aus dem Field. Falls dieser nicht existiert
      * oder Parameter fehlerhaft sind, wird ein Fehler in der Konsole
      * ausgegeben
      * @param tokens : String array der Parameter als Strings
@@ -58,7 +58,7 @@ final class ShellToField {
             boolean removed = field.remove(x, y);
 
             if (!removed) {
-                printError("Field.Point has not been added before!");
+                printError("Point has not been added before!");
             }
         }
     }
@@ -77,11 +77,11 @@ final class ShellToField {
      * ausgegeben
      */
     static void distance() {
-        String result = field.distance();
-        if (result == null) {
+        String distance = field.distance();
+        if (distance == null) {
             printError("Less than 2 points in the field!");
         } else {
-            System.out.println(result);
+            System.out.println(distance);
         }
     }
 
@@ -108,7 +108,7 @@ final class ShellToField {
      * @param message : Spezialisierung des Fehlers
      */
     static void printError(String message) {
-        String errorMessage = "Error!";
+        final String errorMessage = "Error!";
         System.out.println(errorMessage + " " + message);
     }
 
@@ -126,7 +126,7 @@ final class ShellToField {
             try {
                 parameters[i] = Integer.parseInt(tokens[i]);
             } catch (NumberFormatException e) {
-                printError("Parameter " + i + " is no integer!");
+                printError("Parameter " + i + " is no integer or too long!");
                 return null;
             }
         }

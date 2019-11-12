@@ -1,5 +1,5 @@
 /**
- * Field.Field
+ * Field
  *
  * Version:
  */
@@ -13,12 +13,23 @@ import java.util.List;
 public class Field {
 
     private List <Point> points;                    //Punkte des Fields
-    private IdentDistPairs identDistPairs;
+    private IdentDistPairs identDistPairs;          //Kürz. Distanz mit Paaren
 
+    /**
+     * Öffentlicher Konstruktor der Klasse Field
+     */
     public Field() {
         points = new ArrayList<Point>();
     }
 
+    /**
+     * Fügt einen Punkt (x, y) in das Field hinzu. Falls dieser in dem Field
+     * schon existiert, wird kein weiterer Punkt hinzugefügt.
+     * @param x : x-Wert des neuen Punktes
+     * @param y : y-Wert des neuen Punktes
+     * @return boolean : true, falls der Punkt erfolgreich hinzugefügt wurde
+     *                   false, falls der Punkt schon vorhanden war
+     */
     public boolean add(int x, int y) {
         Point toAdd = new Point(x, y);
         if (!points.contains(toAdd)) {
@@ -28,10 +39,22 @@ public class Field {
         }
     }
 
+    /**
+     * Entfernt einen Punkt (x, y) aus dem Field. Falls dieser nicht vorhanden
+     * war, passiert nichts
+     * @param x : x-Wert des zu entfernenden Punktes
+     * @param y : y-Wert des zu entfernenden Punktes
+     * @return boolean : true, falls der Punkt erfolgreich entfernt wurde
+     *                   false, falls der Punkt nicht vorhanden war
+     */
     public boolean remove(int x, int y) {
         return points.remove(new Point(x, y));
     }
 
+    /**
+     * Gibt die Darstellung des Fields zurück
+     * @return String : String der Darstellung
+     */
     public String print() {
         StringBuilder allPoints = new StringBuilder();
         allPoints.append("points: ");
@@ -46,39 +69,73 @@ public class Field {
         return allPoints.toString();
     }
 
+    /**
+     * Berechnet die kürzeste Distanz des Fields und gibt diese mit den
+     * zugehörigen Paaren zurück in einer Darstellung
+     * @return String : null, falls keine Distanz existiert
+     *                  andernfalls die Darstellung mit dem String
+     */
     public String distance() {
         if (points.size() > 1) {
             sortByX();
-            List<Point> sortedByY = sortByY();
+            List<Point> sortedByY = sortReversedByY();
             determineDistance(sortedByY);
-            return identDistPairs.toString();
+
+            IdentDistPairs distance = identDistPairs;
+            identDistPairs = null;
+            return distance.toString();
         } else {
             return null;
         }
     }
 
+    /**
+     * rekursive Hilfsfunktion von distance. Berechnet bei weniger als 4
+     * Punkten die Distanz per Brute-Force, ansonsten mit einem Herrsche-Teile
+     * Verfahren durch Aufspalten der Fields in 2 gleich große Teile.
+     * @param sortedByY : nach y-sortierte points des Anfangsfields
+     */
     private void determineDistance(List <Point> sortedByY) {
         if (points.size() > 3) {
             Field left = new Field();
             Field right = new Field();
-            divideFields(left, right);
+            int partingLine = divideFields(left, right);
 
-            left.determineDistance(sortedByY);
-            right.determineDistance(sortedByY);
+            List <Point> leftSortedByY = new ArrayList<Point>();
+            List <Point> rightSortedByY = new ArrayList<Point>();
+            createSortedByYLists(leftSortedByY, rightSortedByY, sortedByY);
+
+            left.determineDistance(leftSortedByY);
+            right.determineDistance(rightSortedByY);
             identDistPairs = left.mergeIdentDistPairs(right);
+            conquer(partingLine, sortedByY);
         } else {
             calculate();
         }
     }
 
-    private void divideFields(Field left, Field right) {
+    /**
+     * Spaltet das Field für den rekursiven Schritt in zwei gleich große
+     * Fields auf.
+     * @param left : linkes Field
+     * @param right : rechtes Field
+     * @return parting Line : Trennungsline der Fields
+     */
+    private int divideFields(Field left, Field right) {
         int rightSize = points.size() / 2;
         int leftSize = points.size() - rightSize;
+        List <Point> leftPoints = points.subList(0, leftSize);
+        List <Point> rightPoints = points.subList(leftSize, points.size());
+        setSide(leftPoints, rightPoints);
 
-        left.setPoints(points.subList(0, leftSize));
-        right.setPoints(points.subList(leftSize, points.size()));
+        left.setPoints(leftPoints);
+        right.setPoints(rightPoints);
+        return points.get(leftSize - 1).getX();
     }
 
+    /**
+     * Berechnet bei weniger als 4 Punkten die Distanz per Brute-Force.
+     */
     private void calculate() {
         for (int i = 0; i < points.size(); i++) {
             for (int j = i + 1; j < points.size(); j++) {
@@ -96,21 +153,69 @@ public class Field {
         }
     }
 
+    private void conquer(int partingLine, List <Point> sortedByY) {
+
+        Separator separator = new Separator(partingLine, sortedByY);
+        separator.distance(identDistPairs);
+    }
+
+    private void createSortedByYLists(List <Point> left, List <Point> right,
+                                      List <Point> sortedByY) {
+        for (Point p: sortedByY) {
+            if (p.getSide() == Side.LEFT) {
+                left.add(p);
+            } else if(p.getSide() == Side.RIGHT) {
+                right.add(p);
+            }
+        }
+    }
+
+    /**
+     * Setzmethode. Setzt das Attribut Side in jedem Point
+     * @param left : points des linken Fields
+     * @param right : points des rechten Fields
+     */
+    private void setSide(List <Point> left, List <Point> right) {
+        for (Point p: left) {
+            p.setSide(Side.LEFT);
+        }
+        for (Point p: right) {
+            p.setSide(Side.RIGHT);
+        }
+    }
+
+    /**
+     * Fügt die identDistPairs der 2 aufgespaltenen Fields zu einem zusammen
+     * @param other : Field, mit dem verschmolzen werden soll
+     * @return IdentDistPairs : Rückgabe des zusammengefügten identDistPairs
+     */
     private IdentDistPairs mergeIdentDistPairs(Field other) {
         return identDistPairs.compareTo(other.identDistPairs);
     }
 
+    /**
+     * Setzmethode
+     * @param newPoints : Liste der Punkte
+     */
     private void setPoints(List <Point> newPoints) {
         points = newPoints;
     }
 
+    /**
+     * Sortiert points lexikographisch nach x- und bei Gleichheit auf y-Wert
+     */
     private void sortByX() {
         Collections.sort(points);
     }
 
-    private List <Point> sortByY() {
+    /**
+     * Sortiert eine zu points äqivalente Liste von Punkten rückwärts
+     * lexikographisch nach y- und bei Gleichheit nach x-Wert
+     * @return sortedByX : sortierte Liste
+     */
+    private List <Point> sortReversedByY() {
         List <Point> sortedByY = points.subList(0, points.size() - 1);
-        Collections.sort(sortedByY, new PointVertComp());
+        Collections.sort(sortedByY, (new PointVertComp()).reversed());
         return sortedByY;
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Shell.Shell
+ * Shell
  *
  * Version:
  */
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public final class Shell {
+final class Shell {
 
     /**
      * Privater Konstruktor der Klasse Shell,

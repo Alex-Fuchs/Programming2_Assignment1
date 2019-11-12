@@ -8,7 +8,12 @@ package Field;
 
 import java.util.Comparator;
 
-public class PointVertComp implements Comparator <Point> {
+class PointVertComp implements Comparator <Point> {
+
+    /**
+     * Packaged Konstruktor der Klasse PointVertComp
+     */
+    PointVertComp() {}
 
     /**
      * Vergleicht zwei Punkte lexikographisch nach y-Wert und bei
