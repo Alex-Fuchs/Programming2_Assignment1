@@ -9,6 +9,7 @@ package Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 class IdentDistPairs {
 
@@ -19,30 +20,30 @@ class IdentDistPairs {
     /**
      * Packaged Konstruktor der Klasse IdentDistPairs. Kann nur in
      * Verbindung mit einem Paar erstellt werden.
-     * @param newDistance : Distanz des ersten hinzugefügten Paares
      * @param first : zum Paar zugehöriger erster Punkt
      * @param second : zum Paar zugehöriger zweiter Punkt
      */
-    IdentDistPairs(double newDistance, Point first, Point second) {
+    IdentDistPairs(Point first, Point second) {
         pairs = new ArrayList<Pair>();
+        double newDistance = first.distance(second);
         setDistance(newDistance, first, second);
     }
 
     /**
      * Setzt die Liste auf die bisher bekannten Paaren dieser Distanz und
      * ersetzt die alte Distanz, falls eine kleinere gefunden wird.
-     * @param newDistance : Distanz eines neuen Paares
      * @param first : zum Paar zugehörigerer erster Punkt
      * @param second : zum Paar zugehöriger zweiter Punkt
      */
-    void newPairDistance(double newDistance, Point first, Point second) {
-            int comparison = compareDistances(newDistance);
-            if (comparison == 1) {
-                pairs.clear();
-                setDistance(newDistance, first, second);
-            } else if (comparison == 0) {
-                pairs.add(new Pair(first, second));
-            }
+    void newPairDistance(Point first, Point second) {
+        double newDistance = first.distance(second);
+        int comparison = compareDistances(newDistance);
+        if (comparison == 1) {
+            pairs.clear();
+            setDistance(newDistance, first, second);
+        } else if (comparison == 0) {
+            pairs.add(new Pair(first, second));
+        }
     }
 
     /**
@@ -70,9 +71,7 @@ class IdentDistPairs {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        double distanceRounded = Math.round(distance * 100) / 100d;
-
-        String[] toAppend = {"distance: ", String.valueOf(distanceRounded), "\n", "pairs: "};
+        String[] toAppend = {"distance: ", String.format(Locale.US, "%.2f", distance), "\n", "pairs: "};
         for (String tmp: toAppend) {
             stringBuilder.append(tmp);
         }
@@ -142,7 +141,7 @@ class IdentDistPairs {
      * Rückgabemethode
      * @return distance : momentane kürzeste Distanz von einem Paar
      */
-    private double getDistance() {
+    double getDistance() {
         return distance;
     }
 

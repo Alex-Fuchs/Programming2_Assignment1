@@ -10,7 +10,7 @@ class Point implements Comparable <Point> {
 
     private int x;                      // x-Wert des 2D Punktes
     private int y;                      // y-Wert des 2D Punktes
-    private Side side;                  // Seite des Oberfields
+    private Side side;                  // Seite des Punkts im Oberfield
 
     /**
      * Packaged Konstruktor der Klasse Point
@@ -78,7 +78,7 @@ class Point implements Comparable <Point> {
 
     /**
      * Setzmethode
-     * @param newSide : Seite des Oberfields
+     * @param newSide : Seite des Punkts im Oberfield
      */
     void setSide(Side newSide) {
         side = newSide;

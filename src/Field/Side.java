@@ -1,5 +1,5 @@
 package Field;
 
-public enum Side {
+enum Side {
     LEFT, RIGHT, UNSET;
 }

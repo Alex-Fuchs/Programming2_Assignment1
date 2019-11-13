@@ -1,5 +1,5 @@
 /**
- * Shell
+ * Shell Utilityklasse
  *
  * Version:
  */
@@ -12,10 +12,6 @@ import java.io.InputStreamReader;
 
 final class Shell {
 
-    /**
-     * Privater Konstruktor der Klasse Shell,
-     * da keine Objekte der Klasse initialisiert werden sollen
-     */
     private Shell() { }
 
     /**
@@ -26,12 +22,12 @@ final class Shell {
      *                     und das Programm wird beendet
      */
     public static void main(String[] args) throws IOException {
-        BufferedReader stdin = new BufferedReader(
-                                new InputStreamReader(System.in));
+        BufferedReader stdin
+        = new BufferedReader(new InputStreamReader(System.in));
         execute(stdin);
     }
 
-    /**
+    /*
      * Liest Befehle inkl. Parameter des Benutzers ein, reagiert auf Befehle
      * mit einer Fehlerausgabe oder leitet diese ggf. mit Parameter weiter.
      * Die Parameter werden erst nach Weiterleitung geprüft
@@ -47,7 +43,7 @@ final class Shell {
             System.out.print("cp> ");
             String input = stdin.readLine();
 
-            if (input == null || input.equals("")) {
+            if (input == null || input.trim().equals("")) {
                 ShellToField.printError("Please enter a command!");
                 continue;
             }
@@ -55,17 +51,17 @@ final class Shell {
             String[] tokens = input.trim().split("\\s+");
             tokens[0] = tokens[0].toLowerCase();
 
-            switch (tokens[0]) {
-            case "n":
+            switch (tokens[0].charAt(0)) {
+            case 'n':
                 ShellToField.newField();
                 break;
-            case "h":
+            case 'h':
                 ShellToField.help();
                 break;
-            case "q":
+            case 'q':
                 quit = true;
                 break;
-            case "a":
+            case 'a':
                 if (tokens.length >= 3) {
                     String[] parametersForAdd = {tokens[1], tokens[2]};
                     ShellToField.add(parametersForAdd);
@@ -73,7 +69,7 @@ final class Shell {
                     ShellToField.printError("Not enough parameters!");
                 }
                 break;
-            case "r":
+            case 'r':
                 if (tokens.length >= 3) {
                     String[] parametersForRemove = {tokens[1], tokens[2]};
                     ShellToField.remove(parametersForRemove);
@@ -81,10 +77,10 @@ final class Shell {
                     ShellToField.printError("Not enough parameters!");
                 }
                 break;
-            case "p":
+            case 'p':
                 ShellToField.print();
                 break;
-            case "d":
+            case 'd':
                 ShellToField.distance();
                 break;
             default:
