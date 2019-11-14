@@ -1,15 +1,19 @@
-/**
- * Field
- *
- * Version:
- */
-
-package Field;
+package de.uni_passau.fim.prog2.closest_pairs_of_points;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Field
+ *
+ * Version: 14.11.19
+ *
+ * Stellt ein Koordinatensystem dar, in dem Punkte hinzugefügt und entfernt
+ * werden können. Zudem können alle Punkte ausgegeben werden, und die
+ * kürzeste Distanz inkl. aller Paare berechnet werden. Die Distanzberechnung
+ * verwendet ein Teile-Herrsche Verfahren mit einer Laufzeit O(n * log (n))
+ */
 public class Field {
 
     private List <Point> points;                    //Punkte des Fields
@@ -28,7 +32,7 @@ public class Field {
      * @param x : x-Wert des neuen Punktes
      * @param y : y-Wert des neuen Punktes
      * @return boolean : true, falls der Punkt erfolgreich hinzugefügt wurde
-     *                 false, falls der Punkt schon vorhanden war
+     *                   false, falls der Punkt schon vorhanden war
      */
     public boolean add(int x, int y) {
         Point toAdd = new Point(x, y);
@@ -45,14 +49,15 @@ public class Field {
      * @param x : x-Wert des zu entfernenden Punktes
      * @param y : y-Wert des zu entfernenden Punktes
      * @return boolean : true, falls der Punkt erfolgreich entfernt wurde
-     *                 false, falls der Punkt nicht vorhanden war
+     *                   false, falls der Punkt nicht vorhanden war
      */
     public boolean remove(int x, int y) {
         return points.remove(new Point(x, y));
     }
 
     /**
-     * Gibt die Darstellung des Fields zurück
+     * Gibt die kanonische Darstellung der nach x-Wert sortierten Punkte
+     * des Fields zurück
      * @return String : String der Darstellung
      */
     public String print() {
@@ -70,16 +75,16 @@ public class Field {
 
     /**
      * Berechnet die kürzeste Distanz des Fields und gibt diese mit den
-     * zugehörigen Paaren in einer Darstellung zurück
+     * zugehörigen Paaren in einer Darstellung zurück. Setzt zudem
+     * identDistPairs für die nächste Distanzsuche vollständig zurück.
      * @return String : null, falls keine Distanz existiert
-     *                andernfalls die Darstellung mit dem String
+     *                  String mit der Darstellung sonst
      */
     public String distance() {
         if (points.size() > 1) {
             sortByX();
             List<Point> sortedByY = sortByY();
             determineDistance(sortedByY);
-
             IdentDistPairs distance = identDistPairs;
             identDistPairs = null;
             return distance.toString();
@@ -88,11 +93,11 @@ public class Field {
         }
     }
 
-    /**
-     * rekursive Hilfsfunktion von distance. Berechnet bei weniger als 4
+    /*
+     * rekursive Hilfsfunktion von distance(). Berechnet bei weniger als 4
      * Punkten die Distanz per Brute-Force, ansonsten mit einem Herrsche-Teile
-     * Verfahren durch Aufspalten der Fields in 2 gleich große Teile.
-     * @param sortedByY : nach y-sortierte points des Oberfields
+     * Verfahren durch Aufspalten der Fields in 2 gleich große Teile
+     * @param sortedByY : nach y-sortierte points des Fields
      */
     private void determineDistance(List <Point> sortedByY) {
         if (points.size() > 3) {
@@ -100,28 +105,25 @@ public class Field {
             Field right = new Field();
             List <Point> leftSortedByY = new ArrayList<Point>();
             List <Point> rightSortedByY = new ArrayList<Point>();
-
             int median = divideFields(left, right);
             createSortedByYLists(leftSortedByY, rightSortedByY, sortedByY);
 
             left.determineDistance(leftSortedByY);
             right.determineDistance(rightSortedByY);
-
-            setSide(median);
             identDistPairs = left.mergeIdentDistPairs(right);
-            conquer(median, leftSortedByY, rightSortedByY);
+            conquer(median, sortedByY);
         } else {
             calculate();
         }
     }
 
-    /**
+    /*
      * Spaltet das Field für den rekursiven Schritt in zwei gleich große
-     * Fields auf. Setzt zudem die Seite der Punkte für diesen
-     * Teile-Schritt richtig
+     * Fields auf. Setzt zudem die Seite der Punkte für das Kreieren der
+     * nach y-Wert sortierten Liste der Unterfields
      * @param left : linkes Field
      * @param right : rechtes Field
-     * @return leftSize - 1 : Median des Fields
+     * @return leftSize - 1 : Median der Spaltung
      */
     private int divideFields(Field left, Field right) {
         int rightSize = points.size() / 2;
@@ -129,15 +131,15 @@ public class Field {
         List <Point> leftPoints = points.subList(0, leftSize);
         List <Point> rightPoints = points.subList(leftSize, points.size());
         setSide(leftSize - 1);
-
         left.setPoints(leftPoints);
         right.setPoints(rightPoints);
         return leftSize - 1;
     }
 
-    /**
+    /*
      * Berechnet bei weniger als 4 Punkten die kürzeste Distanz per
-     * Brute-Force
+     * Brute-Force. Erstellt ggf. ein identDistPairs, da dieses nur
+     * existiert, wenn bereits eine Distanz bekannt ist
      */
     private void calculate() {
         for (int i = 0; i < points.size(); i++) {
@@ -153,30 +155,28 @@ public class Field {
         }
     }
 
-    /**
-     * Fügt die Fields endgültig mit dem Teile-Herrsche Verfahren zusammen
-     * @param median : Median des Fields
-     * @param leftSortedByY : points des linken Fields nach y-Wert, rückwärts
-     *                     sortiert
-     * @param rightSortedByY : points des rechten Fields nach y-Wert, rückwärts
-     *                      sortiert
-     *
+    /*
+     * Fügt die Fields endgültig mit dem Teile-Herrsche Verfahren zusammen.
+     * Setzt zudem die Seite der Punkte erneut, da diese in der Rekursion
+     * nicht diesem Field entsprechend gesetzt wurden
+     * @param median : Median der Spaltung
+     * @param sortedByY : nach y-Wert sortierte Liste des Fields
      */
-    private void conquer(int median, List <Point> leftSortedByY,
-                         List <Point> rightSortedByY) {
+    private void conquer(int median, List <Point> sortedByY) {
+        setSide(median);
         int partingLine = points.get(median).getX();
-        Separator separator = new Separator(identDistPairs, leftSortedByY,
-                                            rightSortedByY, partingLine);
+        Separator separator
+        = new Separator(identDistPairs, sortedByY, partingLine);
         separator.setDistance();
     }
 
-    /**
-     * Fügt Listen für das linke und rechte Field die Punkte nach y-Wert
-     * rückwärts sortiert hinzu
+    /*
+     * Kreiert nach y-Wert sortierte Listen für das linke und rechte
+     * Unterfield. Dabei müssen die Seiten der Punkte davor gesetzt werden
      * @param left : Liste für das linke Field
      * @param right : Liste für das rechte Field
      * @param sortedByY : Liste des gesamten Fields, rückwärts nach y-Wert
-     *                  sortiert
+     *                    sortiert
      */
     private void createSortedByYLists(List <Point> left, List <Point> right,
                                       List <Point> sortedByY) {
@@ -192,9 +192,9 @@ public class Field {
     }
 
     /*
-     * Setzmethode
-     * @parameter median : der letzte Index Punkte des linken Fields, da
-     * points nach x-Wert sortiert ist
+     * Setzmethode. Setzt die Seiten der Punkte anhand des Medians, da
+     * points vorher nach x-Wert sortiert wurde
+     * @parameter median : Median der Spaltung
      */
     private void setSide(int median) {
         for (int i = 0; i < points.size(); i++) {
@@ -218,14 +218,6 @@ public class Field {
     }
 
     /*
-     * Setzmethode
-     * @param newPoints : Liste der Punkte
-     */
-    private void setPoints(List <Point> newPoints) {
-        points = newPoints;
-    }
-
-    /*
      * Sortiert points lexikographisch nach x- und bei Gleichheit auf y-Wert
      */
     private void sortByX() {
@@ -241,5 +233,9 @@ public class Field {
         List <Point> sortedByY = new ArrayList<Point>(points);
         Collections.sort(sortedByY, (new PointVertComp()));
         return sortedByY;
+    }
+
+    private void setPoints(List <Point> newPoints) {
+        points = newPoints;
     }
 }

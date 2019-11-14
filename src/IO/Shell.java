@@ -1,15 +1,16 @@
-/**
- * Shell Utilityklasse
- *
- * Version:
- */
-
-package Shell;
+package io;
 
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * io Utilityklasse
+ *
+ * Version: 14.11.19
+ *
+ * Inputklasse, die alle Kommandos des Nutzers in der Shell entgegennimmt
+ */
 final class Shell {
 
     private Shell() { }

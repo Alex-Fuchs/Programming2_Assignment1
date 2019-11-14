@@ -1,13 +1,15 @@
+package io;
+
+import de.uni_passau.fim.prog2.closest_pairs_of_points.Field;
+
 /**
  * ShellToField Utilityklasse
  *
- * Version:
+ * Version: 14.11.19
+ *
+ * Schnittstellenklasse, um Field als auch die Shell wiederverwendbar zu
+ * machen
  */
-
-package Shell;
-
-import Field.Field;
-
 final class ShellToField {
 
     private static Field field = new Field();            //Field des Programms
@@ -83,14 +85,16 @@ final class ShellToField {
      * Gibt alle möglichen Kommandos in der Konsole aus
      */
     static void help() {
-        String[] commands = {"Following commands supported:",
+        String[] commands = {"-----",
+                "closest Pairs commands:",
                 "h: prints all commands",
                 "q: system quit",
                 "n: creates a new field",
                 "p: prints all points in the field",
                 "r <integer x> <integer y>: removes the point (x, y)",
                 "a <integer x> <integer y>: adds the point (x,y)",
-                "d: prints the shortest distance of 2 points"};
+                "d: prints the shortest distance of 2 points",
+                "-----"};
 
         for (String tmp: commands) {
             System.out.println(tmp);

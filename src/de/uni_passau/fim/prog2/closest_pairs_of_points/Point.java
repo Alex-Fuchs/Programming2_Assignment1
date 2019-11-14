@@ -1,11 +1,12 @@
+package de.uni_passau.fim.prog2.closest_pairs_of_points;
+
 /**
- * Field.Point
+ * Point
  *
- * Version:
+ * Version: 14.11.19
+ *
+ * Stellt einen 2D Punkt eines Fields dar
  */
-
-package Field;
-
 class Point implements Comparable<Point> {
 
     private int x;                      // x-Wert des 2D Punktes
@@ -105,8 +106,8 @@ class Point implements Comparable<Point> {
         return Math.sqrt(xLength * xLength + yLength * yLength);
     }
 
-    void setSide(Side newSide) {
-        side = newSide;
+    void setSide(Side side) {
+        this.side = side;
     }
 
     Side getSide() {

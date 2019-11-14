@@ -1,15 +1,17 @@
+package de.uni_passau.fim.prog2.closest_pairs_of_points;
+
 /**
  * Pair
  *
- * Version:
+ * Version: 14.11.19
+ *
+ * Stellt ein Paar von 2D Punkten eines Fields dar
  */
-
-package Field;
-
 class Pair implements Comparable<Pair> {
 
-    /* Paar (first, second) von 2D Punkten, Es gilt immer, dass
-     * first <= second ist.
+    /*
+     * Paar (first, second) von 2D Punkten,
+     * Es gilt immer first <= second
      */
     private Point first;
     private Point second;
