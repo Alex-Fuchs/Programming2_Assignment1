@@ -8,24 +8,26 @@ package Field;
 
 class Pair implements Comparable<Pair> {
 
-    // (first, second) Paar von 2D Punkten, first <= second
+    /* Paar (first, second) von 2D Punkten, Es gilt immer, dass
+     * first <= second ist.
+     */
     private Point first;
     private Point second;
 
-    /**
+    /*
      * Packaged Konstruktor der Klasse Pair
-     * Es wird sichergestellt, dass in dem Paar (erster Punkt, zweiter Punkt)
-     * der erste Punkt <= dem zweiten Punkt gilt
-     * @param newFirst : Erste 2D Punkt des Paares
-     * @param newSecond : Zweite 2D Punkt des Paares
+     * Es wird sichergestellt, dass in dem Paar (first, second) der erste
+     * Punkt <= dem zweiten Punkt gilt
+     * @param first : Erste 2D Punkt des Paares
+     * @param second : Zweite 2D Punkt des Paares
      */
-    Pair(Point newFirst, Point newSecond) {
-        if (newFirst.compareTo(newSecond) <= 0) {
-            first = newFirst;
-            second = newSecond;
+    Pair(Point first, Point second) {
+        if (first.compareTo(second) <= 0) {
+            this.first = first;
+            this.second = second;
         } else {
-            first = newSecond;
-            second = newFirst;
+            this.first = second;
+            this.second = first;
         }
     }
 
@@ -53,7 +55,7 @@ class Pair implements Comparable<Pair> {
     }
 
     /**
-     * Gibt die Darstellung des Paares zurück
+     * Gibt die kanonische Darstellung des Paares zurück
      * @return String : first - second bzw. (x, y) - (x, y)
      */
     @Override
@@ -61,18 +63,10 @@ class Pair implements Comparable<Pair> {
         return first.toString() + " - " + second.toString();
     }
 
-    /**
-     * Rückgabemethode
-     * @return first : Der erste Punkt des 2-Tupels
-     */
     private Point getFirst() {
         return first;
     }
 
-    /**
-     * Rückgabemethode
-     * @return second : Der zweite Punkt des 2-Tupels
-     */
     private Point getSecond() {
         return second;
     }

@@ -6,27 +6,32 @@
 
 package Field;
 
-class Point implements Comparable <Point> {
+class Point implements Comparable<Point> {
 
     private int x;                      // x-Wert des 2D Punktes
     private int y;                      // y-Wert des 2D Punktes
-    private Side side;                  // Seite des Punkts im Oberfield
 
-    /**
-     * Packaged Konstruktor der Klasse Point
-     * @param newX : x-Wert des 2D Punktes
-     * @param newY : y-Wert des 2D Punktes
+    /*
+     * Seite des Punkts in dem momentan behandelten Field. Wird zur Spaltung
+     * der nach y- sortierten Listen verwendet, zudem auch im Separator
      */
-    Point(int newX, int newY) {
-        x = newX;
-        y = newY;
+    private Side side;
+
+    /*
+     * Packaged Konstruktor der Klasse Point
+     * @param x : x-Wert des 2D Punktes
+     * @param y : y-Wert des 2D Punktes
+     */
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
         side = Side.UNSET;
     }
 
     /**
      * Vergleicht die Punkte lexikographisch nach den x-Wert
      * und bei Gleichheit auf den y-Wert
-     * @param other : Punkt wird mit dem Punkt other verglichen
+     * @param other : this wird mit dem Punkt other verglichen
      * @return int : 1 wird zurückgegeben, falls this > other
      *              -1 wird zurückgegeben, falls this < other
      *               0 wird zurückgegeben, falls this = other
@@ -47,9 +52,29 @@ class Point implements Comparable <Point> {
     }
 
     /**
+     * Gibt die kanonische Darstellung des Punktes zurück
+     * @return String : (x, y)
+     */
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+
+    /**
+     * Prüft Gleichheit der Punkte auf x- und y-Wert
+     * @param other : this wird mit dem Punkt other verglichen
+     * @return boolean : true wird bei Gleichheit zurückgegeben
+     *                   false sonst
+     */
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof Point && compareTo( (Point) other) == 0);
+    }
+
+    /*
      * Vergleicht die Punkte lexikographisch nach den y-Wert
      * und bei Gleichheit auf den x-Wert
-     * @param other : Punkt wird mit dem Punkt other verglichen
+     * @param other : this wird mit dem Punkt other verglichen
      * @return int : 1 wird zurückgegeben, falls this > other
      *              -1 wird zurückgegeben, falls this < other
      *               0 wird zurückgegeben, falls this = other
@@ -68,36 +93,9 @@ class Point implements Comparable <Point> {
         }
     }
 
-    /**
-     * Rückgabemethode
-     * @return x : x-Wert des Punktes
-     */
-    int getX() {
-        return x;
-    }
-
-    /**
-     * Setzmethode
-     * @param newSide : Seite des Punkts im Oberfield
-     */
-    void setSide(Side newSide) {
-        side = newSide;
-    }
-
-    /**
-     * Prüft Gleichheit der Punkte auf x- und y-Wert
-     * @param other : Punkt wird mit dem Punkt other verglichen
-     * @return boolean : true wird bei Gleichheit zurückgegeben
-     *                   false andernfalls
-     */
-    @Override
-    public boolean equals(Object other) {
-        return (other instanceof Point && compareTo( (Point) other) == 0);
-    }
-
-    /**
+    /*
      * Berechnet die euklidische Distanz von 2 Punkten
-     * @param other : Punkt wird mit dem Punkt other verrechnet
+     * @param other : this wird mit dem Punkt other verrechnet
      * @return double : Distanz der Punkte
      */
     double distance(Point other) {
@@ -107,27 +105,18 @@ class Point implements Comparable <Point> {
         return Math.sqrt(xLength * xLength + yLength * yLength);
     }
 
-    /**
-     * Gibt die Darstellung des Punktes zurück
-     * @return String : (x, y)
-     */
-    @Override
-    public String toString() {
-        return "(" + x + ", " + y + ")";
+    void setSide(Side newSide) {
+        side = newSide;
     }
 
-    /**
-     * Rückgabefunktion
-     * @return side : Seite des Punktes im Oberfield
-     */
     Side getSide() {
         return side;
     }
 
-    /**
-     * Rückgabemethode
-     * @return y : y-Wert des Punktes
-     */
+    int getX() {
+        return x;
+    }
+
     private int getY() {
         return y;
     }

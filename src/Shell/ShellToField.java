@@ -67,8 +67,8 @@ final class ShellToField {
 
     /*
      * Gibt die kürzeste Distanz des Fields inkl. aller Paare in der Konsole
-     * aus. Falls zu wenig Punkte vorhanden sind,
-     * wird ein Fehler in der Konsole ausgegeben
+     * aus. Falls zu wenig Punkte vorhanden sind, wird ein Fehler in der
+     * Konsole ausgegeben
      */
     static void distance() {
         String result = field.distance();

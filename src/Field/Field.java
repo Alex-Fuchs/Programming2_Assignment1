@@ -106,6 +106,8 @@ public class Field {
 
             left.determineDistance(leftSortedByY);
             right.determineDistance(rightSortedByY);
+
+            setSide(median);
             identDistPairs = left.mergeIdentDistPairs(right);
             conquer(median, leftSortedByY, rightSortedByY);
         } else {
@@ -126,7 +128,7 @@ public class Field {
         int leftSize = points.size() - rightSize;
         List <Point> leftPoints = points.subList(0, leftSize);
         List <Point> rightPoints = points.subList(leftSize, points.size());
-        setSide(leftPoints, rightPoints);
+        setSide(leftSize - 1);
 
         left.setPoints(leftPoints);
         right.setPoints(rightPoints);
@@ -190,17 +192,17 @@ public class Field {
     }
 
     /*
-     * Setzmethode. Setzt das Attribut Side in jedem Punkt nach den Listen
-     * als Parameter
-     * @param left : points des linken Fields
-     * @param right : points des rechten Fields
+     * Setzmethode
+     * @parameter median : der letzte Index Punkte des linken Fields, da
+     * points nach x-Wert sortiert ist
      */
-    private void setSide(List <Point> left, List <Point> right) {
-        for (Point p: left) {
-            p.setSide(Side.LEFT);
-        }
-        for (Point p: right) {
-            p.setSide(Side.RIGHT);
+    private void setSide(int median) {
+        for (int i = 0; i < points.size(); i++) {
+            if (i <= median) {
+                points.get(i).setSide(Side.LEFT);
+            } else {
+                points.get(i).setSide(Side.RIGHT);
+            }
         }
     }
 
