@@ -1,4 +1,4 @@
-package de.uni_passau.fim.prog2.closest_pairs_of_points;
+package closest_pairs_of_points;
 
 /**
  * Side

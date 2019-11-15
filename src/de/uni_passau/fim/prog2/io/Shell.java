@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * io Utilityklasse
+ * Shell Utilityklasse
  *
  * Version: 14.11.19
  *
@@ -39,9 +39,10 @@ final class Shell {
      */
     private static void execute(BufferedReader stdin) throws IOException {
         boolean quit = false;
+        final String prompt = "cp> ";
 
         while (!quit) {
-            System.out.print("cp> ");
+            System.out.print(prompt);
             String input = stdin.readLine();
 
             if (input == null || input.trim().equals("")) {
@@ -63,7 +64,8 @@ final class Shell {
                 quit = true;
                 break;
             case 'a':
-                if (tokens.length >= 3) {
+                final int parameterNumberAdd = 2;
+                if (tokens.length > parameterNumberAdd) {
                     String[] parametersForAdd = {tokens[1], tokens[2]};
                     ShellToField.add(parametersForAdd);
                 } else {
@@ -71,7 +73,8 @@ final class Shell {
                 }
                 break;
             case 'r':
-                if (tokens.length >= 3) {
+                final int parameterNumberRemove = 2;
+                if (tokens.length > parameterNumberRemove) {
                     String[] parametersForRemove = {tokens[1], tokens[2]};
                     ShellToField.remove(parametersForRemove);
                 } else {

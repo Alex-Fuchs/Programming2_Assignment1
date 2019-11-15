@@ -1,4 +1,4 @@
-package de.uni_passau.fim.prog2.closest_pairs_of_points;
+package closest_pairs_of_points;
 
 import java.util.Comparator;
 
@@ -11,7 +11,7 @@ import java.util.Comparator;
  */
 class PointVertComp implements Comparator<Point> {
 
-    PointVertComp() {}
+    PointVertComp() { }
 
     /**
      * Vergleicht zwei Punkte lexikographisch nach y-Wert und bei

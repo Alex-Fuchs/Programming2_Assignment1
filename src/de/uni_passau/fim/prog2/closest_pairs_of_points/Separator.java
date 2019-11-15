@@ -1,4 +1,4 @@
-package de.uni_passau.fim.prog2.closest_pairs_of_points;
+package closest_pairs_of_points;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ class Separator {
     /* Trennlinie des Separators, an der sich die 2 Unterfields trennen */
     private int partingLine;
     /* Liste des Fields, nach y-Wert sortiert */
-    private List <Point> sortedByY;
+    private List<Point> sortedByY;
 
     /*
      * Erstellt den Separator mit den nötigen Informationen des Fields, das
@@ -28,7 +28,7 @@ class Separator {
      * @param sortedByY : Liste des Fields, nach y-Wert sortiert
      * @param partingLine : Trennlinie des Separators
      */
-    Separator(IdentDistPairs identDistPairs, List <Point> sortedByY,
+    Separator(IdentDistPairs identDistPairs, List<Point> sortedByY,
               int partingLine) {
         this.identDistPairs = identDistPairs;
         this.partingLine = partingLine;
@@ -40,7 +40,7 @@ class Separator {
      * des Teile-Herrsche Verfahren vollständig richtig
      */
     void setDistance() {
-        List <Point> criticalPoints = getInCriticalDistance();
+        List<Point> criticalPoints = getInCriticalDistance();
         calculate(criticalPoints);
     }
 
@@ -53,9 +53,14 @@ class Separator {
      *                         Distanz in Frage kommen und im kritischen
      *                         Bereich sind
      */
-    private void calculate(List <Point> criticalPoints) {
+    private void calculate(List<Point> criticalPoints) {
+        /* Betrachtet werden nur Punkte von unterschiedlichen Seiten, da nur
+         * diese Paare noch nicht betrachtet wurden. Aufgrund des Verfahrens
+         * müssen nur pointsToWatch nachfolgende Punkte betrachtet werden. */
+        final int pointsToWatch = 4;
         for (int i = 0; i < criticalPoints.size(); i++) {
-            for (int u = i + 1; u < i + 5 && u < criticalPoints.size(); u++) {
+            for (int u = i + 1; u <= i + pointsToWatch
+                                && u < criticalPoints.size(); u++) {
                 Point first = criticalPoints.get(i);
                 Point second = criticalPoints.get(u);
                 if (first.getSide() != second.getSide()) {
@@ -67,11 +72,12 @@ class Separator {
 
     /*
      * Kreiert eine neue Liste, die von der nach y-Wert sortierten Liste des
-     * Fields lediglich die Punkte im kritischen Bereich enthält
+     * Fields lediglich die Punkte im kritischen Bereich enthält, da nur diese
+     * im folgenden Schritt betrachtet werden müssen
      * @return criticalPoints : Liste der kritischen Punkte
      */
-    private List <Point> getInCriticalDistance() {
-        List <Point> criticalPoints = new ArrayList<Point>();
+    private List<Point> getInCriticalDistance() {
+        List<Point> criticalPoints = new ArrayList<Point>();
         double criticalDistance = identDistPairs.getDistance();
         for (Point p: sortedByY) {
             if (Math.abs(partingLine - p.getX()) <= criticalDistance) {

@@ -1,4 +1,4 @@
-package de.uni_passau.fim.prog2.closest_pairs_of_points;
+package closest_pairs_of_points;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,8 +36,8 @@ class IdentDistPairs {
      */
     @Override
     public String toString() {
-        sortPairs();
         StringBuilder stringBuilder = new StringBuilder();
+        sortPairs();
         appendDistanceToString(stringBuilder);
         appendPairsToString(stringBuilder);
         return stringBuilder.toString();
@@ -92,7 +92,7 @@ class IdentDistPairs {
      * @param otherPairs : Liste der Paare von der anderen identDistPairs
      * @return this : mit der verschmolzenen Paarliste
      */
-    private IdentDistPairs merge(List <Pair> otherPairs) {
+    private IdentDistPairs merge(List<Pair> otherPairs) {
         pairs.addAll(otherPairs);
         return this;
     }

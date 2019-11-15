@@ -1,4 +1,6 @@
-package de.uni_passau.fim.prog2.closest_pairs_of_points;
+package closest_pairs_of_points;
+
+import java.util.Objects;
 
 /**
  * Point
@@ -69,7 +71,16 @@ class Point implements Comparable<Point> {
      */
     @Override
     public boolean equals(Object other) {
-        return (other instanceof Point && compareTo( (Point) other) == 0);
+        return (other instanceof Point && compareTo((Point) other) == 0);
+    }
+
+    /**
+     * Generiert den Hashcode des Objekts
+     * @return hashcode : Zurückgegebener Hashcode
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, side);
     }
 
     /*

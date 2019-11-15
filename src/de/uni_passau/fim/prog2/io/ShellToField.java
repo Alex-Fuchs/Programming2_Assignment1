@@ -1,6 +1,6 @@
 package io;
 
-import de.uni_passau.fim.prog2.closest_pairs_of_points.Field;
+import closest_pairs_of_points.Field;
 
 /**
  * ShellToField Utilityklasse
