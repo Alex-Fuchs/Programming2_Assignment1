@@ -1,1 +1,194 @@
-Hallo
+cp> h
+-----
+closest Pairs commands:
+h: prints all commands
+q: system quit
+n: creates a new field
+p: prints all points in the field
+r <integer x> <integer y>: removes the point (x, y)
+a <integer x> <integer y>: adds the point (x,y)
+d: prints the shortest distance of 2 points
+-----
+cp> a
+Error! Not enough parameters!
+cp> r
+Error! Not enough parameters!
+cp> 
+Error! Please enter a command!
+cp>     
+Error! Please enter a command!
+cp> p
+points: 
+cp> d
+Error! Less than 2 points in the field!
+cp> a d
+Error! Not enough parameters!
+cp> a d f
+Error! Parameter 0 is no integer or too long!
+cp> a 5 f
+Error! Parameter 1 is no integer or too long!
+cp> a 5 5
+cp> p
+points: (5, 5)
+cp> n
+cp> p
+points: 
+cp> a 5 5
+cp> p
+points: (5, 5)
+cp> r 5 5
+cp> r 5 5
+Error! Point has not been added before!
+cp> a 5 5
+cp> p
+points: (5, 5)
+cp> r 5 5
+cp> p
+points: 
+cp> a 5 8 6 8 5
+cp> p
+points: (5, 8)
+cp> r 5 8 9 2 3
+cp> p
+points: 
+cp> n
+cp> p
+points: 
+cp> a 5 5
+cp> a -3 -3
+cp> p
+points: (-3, -3), (5, 5)
+cp> d
+distance: 11.31
+pairs: (-3, -3) - (5, 5)
+cp> a 0 0
+cp> d
+distance: 4.24
+pairs: (-3, -3) - (0, 0)
+cp> r 0 0
+cp> p
+points: (-3, -3), (5, 5)
+cp> a 1 1
+cp> d
+distance: 5.66
+pairs: (-3, -3) - (1, 1), (1, 1) - (5, 5)
+cp> n
+cp> p
+points: 
+cp> a 0 0
+cp> a 1 0
+cp> a -1 0
+cp> a 2 0
+cp> a -2 0
+cp> p
+points: (-2, 0), (-1, 0), (0, 0), (1, 0), (2, 0)
+cp> d
+distance: 1.00
+pairs: (-2, 0) - (-1, 0), (-1, 0) - (0, 0), (0, 0) - (1, 0), (1, 0) - (2, 0)
+cp> n
+cp> p
+points: 
+cp> a 0 0
+cp> a 0 1
+cp> a 0 2
+cp> a 0 -1
+cp> a 0 -2
+cp> p
+points: (0, -2), (0, -1), (0, 0), (0, 1), (0, 2)
+cp> d
+distance: 1.00
+pairs: (0, -2) - (0, -1), (0, -1) - (0, 0), (0, 0) - (0, 1), (0, 1) - (0, 2)
+cp> n
+cp> a -20 5
+cp> a -13 3
+cp> a -10 7
+cp> a -3 6
+cp> a 3 6
+cp> a 10 7
+cp> a 13 3
+cp> a 20 5
+cp> d
+distance: 5.00
+pairs: (-13, 3) - (-10, 7), (10, 7) - (13, 3)
+cp> n
+cp> p
+points: 
+cp> adri 8 9
+cp> p
+points: (8, 9)
+cp> riri 7 7
+Error! Point has not been added before!
+cp> rer 8 9
+cp> p
+points: 
+cp> a 10000000000000000000000000000 100000
+Error! Parameter 0 is no integer or too long!
+cp> a d
+Error! Not enough parameters!
+cp> p
+points: 
+cp> a 1000 321
+cp> a 312 4321
+cp> a 321 645
+cp> a 098 12
+cp> a 09321 12312
+cp> a 123321 890
+cp> a 231 543
+cp> a 09ß 12
+Error! Parameter 0 is no integer or too long!
+cp> a 321 765
+cp> a 534 21
+cp> a 312 4321
+Error! Point already added!
+cp> a 645 321
+cp> a 0933 654
+cp> a 534 65
+cp> a 534 876
+cp> a 432 789
+cp> a 432 76
+cp> a 89 432
+cp> a 645 432
+cp> p
+points: (89, 432), (98, 12), (231, 543), (312, 4321), (321, 645), (321, 765),
+ (432, 76), (432, 789), (534, 21), (534, 65), (534, 876), (645, 321),
+ (645, 432), (933, 654), (1000, 321), (9321, 12312), (123321, 890)
+cp> r 98 12
+cp> r 98 12
+Error! Point has not been added before!
+cp> d
+distance: 44.00
+pairs: (534, 21) - (534, 65)
+cp> hallo
+-----
+closest Pairs commands:
+h: prints all commands
+q: system quit
+n: creates a new field
+p: prints all points in the field
+r <integer x> <integer y>: removes the point (x, y)
+a <integer x> <integer y>: adds the point (x,y)
+d: prints the shortest distance of 2 points
+-----
+cp> a 5,3 2,9
+Error! Parameter 0 is no integer or too long!
+cp> a 43.2 78.3
+Error! Parameter 0 is no integer or too long!
+cp> r 23.6 32.1
+Error! Parameter 0 is no integer or too long!
+cp> a 23.0 78.0
+Error! Parameter 0 is no integer or too long!
+cp> n
+cp> a 23.0 78.0
+Error! Parameter 0 is no integer or too long!
+cp> a 23 78
+cp> p
+points: (23, 78)
+cp> d
+Error! Less than 2 points in the field!
+cp> a 98 23
+cp> d
+distance: 93.01
+pairs: (23, 78) - (98, 23)
+cp> q
+
+Process finished with exit code 0
