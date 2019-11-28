@@ -6,23 +6,31 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * IdentDistPairs
+ * {@code IdentDistPairs} speichert die kürzeste Distanz eines {@code Fields},
+ * inkl aller {@code Pairs} dieser Distanz. Zudem werden in dieser Klasse
+ * die Distanzen verglichen und berechnet.
  *
- * Version: 14.11.19
- *
- * Objekt zur Speicherung der kürzesten Distanz eines Fields. Zudem werden
- * auch alle Paare dieser Distanz gespeichert.
+ * @version 14.11.19
+ * @author -----
  */
 class IdentDistPairs {
 
-    private double distance;                    //momentane kurzeste Distanz
-    private List<Pair> pairs;                  //Paare mit dieser Distanz
+    /**
+     * Entspricht der momentan kürzesten Distanz, die gefunden wurde.
+     */
+    private double distance;
+    /**
+     * Entspricht allen {@code Pairs} mit dieser Distanz.
+     */
+    private List<Pair> pairs;
 
-    /*
-     * Packaged Konstruktor der Klasse IdentDistPairs. Kann nur in
-     * Verbindung mit einem Paar erstellt werden.
-     * @param first : zum Paar zugehöriger erster Punkt
-     * @param second : zum Paar zugehöriger zweiter Punkt
+    /**
+     * Packaged Konstruktor, kann nur in Verbindung mit einem {@code Pair}
+     * erstellt werden.
+     *
+     * @param first     zugehöriger erster {@code Point}
+     * @param second    zugehöriger zweiter {@code Point}
+     * @see             Point
      */
     IdentDistPairs(Point first, Point second) {
         pairs = new ArrayList<Pair>();
@@ -31,8 +39,12 @@ class IdentDistPairs {
     }
 
     /**
-     * Gibt die kanonische Darstellung des identdistPairs this zurück
-     * @return String : String mit der Darstellung
+     * Gibt die kanonische Darstellung von {@code identDistPairs} zurück.
+     *
+     * @return      {@code String} mit der Darstellung
+     * @see         #sortPairs()
+     * @see         #appendDistanceToString(StringBuilder)
+     * @see         #appendPairsToString(StringBuilder)
      */
     @Override
     public String toString() {
@@ -43,11 +55,15 @@ class IdentDistPairs {
         return stringBuilder.toString();
     }
 
-    /*
-     * Setzt die Liste auf die bisher bekannten Paaren dieser Distanz und
-     * ersetzt die alte Distanz, falls eine kleinere gefunden wird.
-     * @param first : zum Paar zugehörigerer erster Punkt
-     * @param second : zum Paar zugehöriger zweiter Punkt
+    /**
+     * Setzt {@code pairs} auf die bisher bekannten {@code Pairs} dieser
+     * Distanz und ersetzt die alte, falls eine kleinere gefunden wird.
+     *
+     * @param first     zugehörigerer erster {@code Point}
+     * @param second    zugehöriger zweiter {@code Point}
+     * @see             #compareDistances(double)
+     * @see             Pair
+     * @see             Point
      */
     void newPairDistance(Point first, Point second) {
         double newDistance = first.distance(second);
@@ -60,20 +76,30 @@ class IdentDistPairs {
         }
     }
 
+    /**
+     * Gibt die momentan kürzeste Distanz zurück.
+     *
+     * @return      momentan kürzeste Distanz
+     */
     double getDistance() {
         return distance;
     }
 
-    /*
-     * Vergleicht zwei identDistPairs aus anliegenden Fields auf deren
-     * Distanz und gibt das identDistPairs mit der kleineren Distanz zurück.
-     * Bei Gleichheit werden diese verschmolzen
-     * @param other : this wird mit other verglichen
-     * @return IdentDistPairs : this, falls this < other
-     *                          other, falls other > this
-     *                          this + other verschmolzen, falls other = this
+    /**
+     * Vergleicht zwei {@code IdentDistPairs} aus anliegenden {@code Fields}
+     * auf deren Distanz und gibt das mit der kleineren Distanz zurück.
+     * Bei Gleichheit werden diese verschmolzen.
+     *
+     * @param other     {@code this} wird mit {@code other} verglichen
+     * @return          {@code this}, falls {@code this} kleiner als
+     *                  {@code other}.
+     *                  {@code other}, falls {@code other} größer als
+     *                  {@code this}.
+     *                  {@code this} + {@code other} verschmolzen andernfalls.
+     * @see             #compareDistances(double)
+     * @see             #merge(List)
      */
-    IdentDistPairs compareTo(IdentDistPairs other) {
+    IdentDistPairs compare(IdentDistPairs other) {
         int comparison = compareDistances(other.getDistance());
         if (comparison < 0) {
             return this;
@@ -84,22 +110,25 @@ class IdentDistPairs {
         }
     }
 
-    /*
-     * Hilfsmethode für den Spezialfall des Mergen der identDistPairs.
-     * Paar Duplikate sind nicht möglich, da die IdentDistPairs aus
-     * unterschiedlichen Fields sind und somit alle Paare paarweise
-     * verschieden sind
-     * @param otherPairs : Liste der Paare von der anderen identDistPairs
-     * @return this : mit der verschmolzenen Paarliste
+    /**
+     * Hilfsmethode für den Spezialfall des Mergen der {@code IdentDistPairs}.
+     * Duplikate sind nicht möglich, da diese aus unterschiedlichen
+     * {@code Fields} stammen.
+     *
+     * @param otherPairs    {@code pairs} von den anderen
+     *                      {@code IdentDistPairs}
+     * @return              verschmolzenes {@code IdentDistPairs}
      */
     private IdentDistPairs merge(List<Pair> otherPairs) {
         pairs.addAll(otherPairs);
         return this;
     }
 
-    /*
-     * Fügt dem Stringbuilder die kanonische Darstellung der kürzesten
-     * Distanz hinzu
+    /**
+     * Fügt dem {@code Stringbuilder} die kanonische Darstellung der kürzesten
+     * Distanz hinzu.
+     *
+     * @param stringBuilder     übergebener {@code Stringbuilder}
      */
     private void appendDistanceToString(StringBuilder stringBuilder) {
         String tmp = String.format(Locale.US, "%.2f", distance);
@@ -109,8 +138,11 @@ class IdentDistPairs {
         }
     }
 
-    /*
-     * Fügt dem Stringbuilder die kanonische Darstellung der Paarliste hinzu
+    /**
+     * Fügt dem {@code Stringbuilder} die kanonische Darstellung
+     * von {@code pairs} hinzu.
+     *
+     * @param stringBuilder     übergebener {@code Stringbuilder}
      */
     private void appendPairsToString(StringBuilder stringBuilder) {
         stringBuilder.append("pairs: ");
@@ -122,12 +154,14 @@ class IdentDistPairs {
         }
     }
 
-    /*
-     * Vergleicht zwei double auf eine Unschärfe von 0.000001.
-     * @param other : distance wird mit dem double other verglichen
-     * @return int : 1 wird zurückgegeben, falls distance > other
-     *              -1 wird zurückgegeben, falls distance < other
-     *               0 wird zurückgegeben, falls distance = other
+    /**
+     * Vergleicht zwei {@code double} auf eine Unschärfe von 0.000001.
+     *
+     * @param other     {@code distance} wird mit dem {@code double other}
+     *                  verglichen
+     * @return          1, falls {@code distance} größer als {@code other}.
+     *                  -1, falls {@code distance} kleiner als {@code other}.
+     *                  0, falls {@code distance} gleich {@code other}.
      */
     private int compareDistances(double other) {
         final double epsilon = 0.000001;
@@ -140,20 +174,22 @@ class IdentDistPairs {
         }
     }
 
-    /*
-     * Sortiert die Paare lexikographisch nach ersten und bei Gleichheit auf
-     * zweiten Punkt. Punkte werden lexikographisch nach x-Wert und bei
-     * Gleichheit auf y-Wert sortiert
+    /**
+     * Sortiert {@code pairs} lexikographisch nach ersten und bei Gleichheit
+     * auf zweiten {@code Point}.
+     *
+     * @see     Point#compareTo(Point)
      */
     private void sortPairs() {
         Collections.sort(pairs);
     }
 
-    /*
-     * Setzmethode der Distanz, nur mit einem Paar möglich
-     * @param distance : neue kürzere Distanz
-     * @param first : erster Punkt des Paares
-     * @param second : zweiter Punkt des Paares
+    /**
+     * Setzmethode der Distanz, nur mit einem {@code Pair} möglich.
+     *
+     * @param distance      neue kürzere Distanz
+     * @param first         erste {@code Point}
+     * @param second        zweiter {@code Point}
      */
     private void setDistance(double distance, Point first, Point second) {
         this.distance = distance;

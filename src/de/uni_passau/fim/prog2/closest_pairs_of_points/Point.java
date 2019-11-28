@@ -3,27 +3,32 @@ package closest_pairs_of_points;
 import java.util.Objects;
 
 /**
- * Point
+ * {@code Point} stellt einen 2D Punkt (x, y) dar.
  *
- * Version: 14.11.19
- *
- * Stellt einen 2D Punkt eines Fields dar
+ * @version 14.11.19
+ * @author -----
  */
 class Point implements Comparable<Point> {
 
-    private int x;                      // x-Wert des 2D Punktes
-    private int y;                      // y-Wert des 2D Punktes
-
-    /*
-     * Seite des Punkts in dem momentan behandelten Field. Wird zur Spaltung
-     * der nach y- sortierten Listen verwendet, zudem auch im Separator
+    /**
+     * Entspricht der x-Koordinate.
+     */
+    private int x;
+    /**
+     * Entspricht der y-Koordinate.
+     */
+    private int y;
+    /**
+     * Seite in dem momentan behandelten {@code Field}. Wird zur Spaltung
+     * der nach y- sortierten Listen verwendet, zudem im {@code Separator}.
      */
     private Side side;
 
-    /*
-     * Packaged Konstruktor der Klasse Point
-     * @param x : x-Wert des 2D Punktes
-     * @param y : y-Wert des 2D Punktes
+    /**
+     * Packaged Konstruktor.
+     *
+     * @param x     x-Wert des {@code Points}
+     * @param y     y-Wert des {@code Points}
      */
     Point(int x, int y) {
         this.x = x;
@@ -32,12 +37,14 @@ class Point implements Comparable<Point> {
     }
 
     /**
-     * Vergleicht die Punkte lexikographisch nach den x-Wert
-     * und bei Gleichheit auf den y-Wert
-     * @param other : this wird mit dem Punkt other verglichen
-     * @return int : 1 wird zurückgegeben, falls this > other
-     *              -1 wird zurückgegeben, falls this < other
-     *               0 wird zurückgegeben, falls this = other
+     * Vergleicht die {@code Points} lexikographisch nach den x-Wert
+     * und bei Gleichheit auf den y-Wert.
+     *
+     * @param other     {@code this} wird mit dem {@code Point other}
+     *                  verglichen
+     * @return          1, falls {@code this} größer als {@code other}.
+     *                  -1, falls {@code this} kleiner als {@code other}.
+     *                  0, falls {@code this} gleich {@code other}.
      */
     @Override
     public int compareTo(Point other) {
@@ -55,8 +62,9 @@ class Point implements Comparable<Point> {
     }
 
     /**
-     * Gibt die kanonische Darstellung des Punktes zurück
-     * @return String : (x, y)
+     * Gibt die kanonische Darstellung des {@code Points} zurück.
+     *
+     * @return      {@code String} der Darstellung (x, y)
      */
     @Override
     public String toString() {
@@ -64,10 +72,12 @@ class Point implements Comparable<Point> {
     }
 
     /**
-     * Prüft Gleichheit der Punkte auf x- und y-Wert
-     * @param other : this wird mit dem Punkt other verglichen
-     * @return boolean : true wird bei Gleichheit zurückgegeben
-     *                   false sonst
+     * Prüft Gleichheit der {@code Points} auf x- und y-Wert.
+     *
+     * @param other     {@code this} wird mit dem {@code Point other}
+     *                  verglichen
+     * @return          {@code true} bei Gleichheit.
+     *                  {@code false} sonst.
      */
     @Override
     public boolean equals(Object other) {
@@ -75,21 +85,23 @@ class Point implements Comparable<Point> {
     }
 
     /**
-     * Generiert den Hashcode des Objekts
-     * @return hashcode : Zurückgegebener Hashcode
+     * Generiert den Hashcode des Objekts.
+     *
+     * @return      Zurückgegebener Hashcode
      */
     @Override
     public int hashCode() {
         return Objects.hash(x, y, side);
     }
 
-    /*
-     * Vergleicht die Punkte lexikographisch nach den y-Wert
-     * und bei Gleichheit auf den x-Wert
-     * @param other : this wird mit dem Punkt other verglichen
-     * @return int : 1 wird zurückgegeben, falls this > other
-     *              -1 wird zurückgegeben, falls this < other
-     *               0 wird zurückgegeben, falls this = other
+    /**
+     * Vergleicht die {@code Points} lexikographisch nach den y-Wert
+     * und bei Gleichheit auf den x-Wert.
+     *
+     * @param other     {@code this} wird mit dem Punkt other verglichen
+     * @return          1, falls {@code this} größer als {@code other}.
+     *                  -1, falls {@code this} kleiner als {@code other}.
+     *                  0, falls {@code this} gleich {@code other}.
      */
     int compareToY(Point other) {
         if (y < other.getY()) {
@@ -105,10 +117,12 @@ class Point implements Comparable<Point> {
         }
     }
 
-    /*
-     * Berechnet die euklidische Distanz von 2 Punkten
-     * @param other : this wird mit dem Punkt other verrechnet
-     * @return double : Distanz der Punkte
+    /**
+     * Berechnet die euklidische Distanz von 2 Punkten.
+     *
+     * @param other     {@code this} wird mit dem {@code Point other}
+     *                  verrechnet
+     * @return          Distanz der {@code Points}
      */
     double distance(Point other) {
         double xLength = x - other.getX();
@@ -117,14 +131,31 @@ class Point implements Comparable<Point> {
         return Math.sqrt(xLength * xLength + yLength * yLength);
     }
 
+    /**
+     * Setzt {@code side}.
+     *
+     * @param side      Übergebene {@code Side}
+     * @see             Side
+     */
     void setSide(Side side) {
         this.side = side;
     }
 
+    /**
+     * Gibt {@code side}.
+     *
+     * @return      {@code side}
+     * @see         Side
+     */
     Side getSide() {
         return side;
     }
 
+    /**
+     * Gibt den x-Wert zurück.
+     *
+     * @return      {@code x}
+     */
     int getX() {
         return x;
     }

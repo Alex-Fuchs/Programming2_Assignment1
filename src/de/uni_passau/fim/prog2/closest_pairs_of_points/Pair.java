@@ -1,27 +1,30 @@
 package closest_pairs_of_points;
 
 /**
- * Pair
+ * {@code Pair} stellt ein Paar (first, second) von {@code Points} dar.
  *
- * Version: 14.11.19
- *
- * Stellt ein Paar von 2D Punkten eines Fields dar
+ * @version 14.11.19
+ * @author -----
  */
 class Pair implements Comparable<Pair> {
 
-    /*
-     * Paar (first, second) von 2D Punkten,
-     * Es gilt immer first <= second
+    /**
+     * Entspricht den ersten {@code Point} des {@code Pair}.
      */
     private Point first;
+    /**
+     * Entspricht den zweiten {@code Point} des {@code Pair}.
+     */
     private Point second;
 
-    /*
-     * Packaged Konstruktor der Klasse Pair
-     * Es wird sichergestellt, dass in dem Paar (first, second) der erste
-     * Punkt <= dem zweiten Punkt gilt
-     * @param first : Erste 2D Punkt des Paares
-     * @param second : Zweite 2D Punkt des Paares
+    /**
+     * Packaged Konstruktor, es wird sichergestellt, dass in dem {@code Pair}
+     * (first, second) gilt: {@code first} kleiner gleich {@code second}.
+     *
+     * @param first     Erste {@code Point}
+     * @param second    Zweite {@code Point}
+     * @see             #compareTo(Pair)
+     * @see             Point
      */
     Pair(Point first, Point second) {
         if (first.compareTo(second) <= 0) {
@@ -34,12 +37,15 @@ class Pair implements Comparable<Pair> {
     }
 
     /**
-     * Vergleicht die Paare lexikographisch nach den beiden ersten Punkten der
-     * Paare und bei Gleichheit nach den beiden zweiten Punkten
-     * @param other : Paar wird mit dem Paar other verglichen
-     * @return int : 1 wird zurückgegeben, falls this > other
-     *              -1 wird zurückgegeben, falls this < other
-     *               0 wird zurückgegeben, falls this = other
+     * Vergleicht {@code Pairs} lexikographisch nach den beiden ersten
+     * {@code Points} und bei Gleichheit nach den beiden zweiten.
+     *
+     * @param other     {@code this} wird mit dem {@code Pair other}
+     *                  verglichen
+     * @return          1, falls {@code this} größer als {@code other}.
+     *                  -1, falls {@code this} kleiner als {@code other}.
+     *                  0, falls {@code this} gleich {@code other}.
+     * @see             Point#compareTo(Point)
      */
     @Override
     public int compareTo(Pair other) {
@@ -57,8 +63,9 @@ class Pair implements Comparable<Pair> {
     }
 
     /**
-     * Gibt die kanonische Darstellung des Paares zurück
-     * @return String : first - second bzw. (x, y) - (x, y)
+     * Gibt die kanonische Darstellung des {@code Pairs} zurück.
+     *
+     * @return      {@code String} als first - second bzw. (x, y) - (x, y)
      */
     @Override
     public String toString() {

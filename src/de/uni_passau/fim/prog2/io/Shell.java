@@ -5,22 +5,28 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * Shell Utilityklasse
+ * {@code Shell} ist eine Utilityklasse, die den Input in der Shell und
+ * somit alle Kommandos des Nutzers verarbeitet und diese darauf an
+ * {@code ShellToField} weiterleitet. Dort werden auch, falls vorhanden, die
+ * Parameter geprüft. Es können beliebig viele Parameter angehängt werden,
+ * nur die ersten, notwendigen Parameter werden weitergeleitet. Zudem kann
+ * statt den Kommandos der Form "c" auch ein Wort mit den Anfangsbuchstaben c
+ * geschrieben werden.
  *
- * Version: 14.11.19
- *
- * Inputklasse, die alle Kommandos des Nutzers in der Shell entgegennimmt
+ * @version 14.11.19
+ * @author ------
  */
 final class Shell {
 
     private Shell() { }
 
     /**
-     * Startet das Programm mit der main Methode.
-     * @param args : Startübergabe des Programms
-     * @throws IOException : Falls I/O Probleme bei dem Benutzer bestehen,
-     *                     leitet die main Methode die IOException weiter
-     *                     und das Programm wird beendet
+     * Startet das Programm.
+     *
+     * @param   args            Startübergabe des Programms
+     * @throws  IOException     Falls I/O Probleme bei dem Benutzer bestehen,
+     *                          wird die {@code IOException} zur JVM
+     *                          weitergeleitet und das Programm wird beendet.
      */
     public static void main(String[] args) throws IOException {
         BufferedReader stdin
@@ -28,28 +34,30 @@ final class Shell {
         execute(stdin);
     }
 
-    /*
-     * Liest Befehle inkl. Parameter des Benutzers ein, reagiert auf Befehle
-     * mit einer Fehlerausgabe oder leitet diese ggf. mit Parameter weiter.
-     * Die Parameter werden erst nach Weiterleitung geprüft
-     * @param stdin : BufferedReader aus der main Methode,
-     *              wird zum Einlesen der Befehle verwendet
-     * @throws IOException : Falls I/O Probleme bei dem Benutzer bestehen,
-     *                     wird eine IOException zur main Methode geworfen
+    /**
+     * Liest Befehle inkl Parameter des Benutzers ein, reagiert auf Befehle
+     * mit einer Fehlerausgabe oder leitet diese ggf mit Parameter weiter.
+     * Die Parameter werden erst nach Weiterleitung geprüft. Statt den
+     * Kommandos "c" werden auch Wörter mit dem Anfangsbuchstaben c
+     * akzeptiert.
+     *
+     * @param   stdin           {@code BufferedReader} aus {@code main},
+     *                          wird zum Lesen der Befehle verwendet.
+     * @throws  IOException     Falls I/O Probleme bei dem Benutzer bestehen,
+     *                          wird eine {@code IOException} zu
+     *                          {@code main} geleitet.
+     * @see                     ShellToField
      */
     private static void execute(BufferedReader stdin) throws IOException {
         boolean quit = false;
         final String prompt = "cp> ";
-
         while (!quit) {
             System.out.print(prompt);
             String input = stdin.readLine();
-
             if (input == null || input.trim().equals("")) {
                 ShellToField.printError("Please enter a command!");
                 continue;
             }
-
             String[] tokens = input.trim().split("\\s+");
             tokens[0] = tokens[0].toLowerCase();
 

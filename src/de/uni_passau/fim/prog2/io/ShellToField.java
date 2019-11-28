@@ -3,31 +3,42 @@ package io;
 import closest_pairs_of_points.Field;
 
 /**
- * ShellToField Utilityklasse
+ * {@code ShellToField} ist eine Utilityklasse, die den Output des Programms
+ * steuert und ebenso die Klassen {@code Field} und {@code Shell} verbindet,
+ * damit beide wiederverwendet werden können. Parameter werden auf Richtigkeit
+ * geprüft. Befehle werden an das {@code Field} Objekt weitergeleitet.
  *
- * Version: 14.11.19
- *
- * Schnittstellenklasse, um Field als auch die Shell wiederverwendbar zu
- * machen
+ * @version 14.11.19
+ * @author -----
  */
 final class ShellToField {
 
-    private static Field field = new Field();            //Field des Programms
+    /**
+     * {@code Field} Objekt des Programms
+     */
+    private static Field field = new Field();
 
     private ShellToField() { }
 
-    /*
-     * Setzt das Field vollständig zurück
+    /**
+     * Setzt das {@code Field} Objekt vollständig zurück.
+     *
+     * @see     Field
      */
     static void newField() {
         field = new Field();
     }
 
-    /*
-     * Fügt den Punkt (x, y) dem Field hinzu. Falls dieser schon existiert
-     * oder Parameter fehlerhaft sind, wird ein Fehler in der Konsole
-     * ausgegeben
-     * @param tokens : String array der Parameter als Strings
+    /**
+     * Fügt den {@code Point} (x, y) dem {@code Field} hinzu.
+     * Falls dieser schon existiert oder Parameter fehlerhaft sind,
+     * wird ein Fehler in der Konsole ausgegeben.
+     *
+     * @param tokens        {@code String[] array} der Länge 2 mit den
+     *                      Parametern x, y als {@code String}
+     * @see                 #checkParameters(String[])
+     * @see                 Field#add(int, int)
+     * @see                 closest_pairs_of_points.Point
      */
     static void add(String[] tokens) {
         Integer[] parameters = checkParameters(tokens);
@@ -41,11 +52,16 @@ final class ShellToField {
         }
     }
 
-    /*
-     * Entfernt den Punkt (x, y) aus dem Field. Falls dieser nicht existiert
-     * oder Parameter fehlerhaft sind, wird ein Fehler in der Konsole
-     * ausgegeben
-     * @param tokens : String array der Parameter als Strings
+    /**
+     * Entfernt den {@code Point} (x, y) aus dem {@code Field}.
+     * Falls dieser nicht existiert oder Parameter fehlerhaft sind,
+     * wird ein Fehler in der Konsole ausgegeben.
+     *
+     * @param tokens        {@code String[] array} der Länge 2 mit den
+     *                      Parametern x, y als {@code String}
+     * @see                 #checkParameters(String[])
+     * @see                 Field#remove(int, int)
+     * @see                 closest_pairs_of_points.Point
      */
     static void remove(String[] tokens) {
         Integer[] parameters = checkParameters(tokens);
@@ -59,18 +75,24 @@ final class ShellToField {
         }
     }
 
-    /*
-     * Gibt alle Punkte des Fields in der Konsole aus
+    /**
+     * Gibt alle {@code Points} des {@code Fields} in der Konsole aus.
+     *
+     * @see     Field#toString()
+     * @see     closest_pairs_of_points.Point
      */
     static void print() {
-        String points = field.print();
-        System.out.println(points);
+        System.out.println(field);
     }
 
-    /*
-     * Gibt die kürzeste Distanz des Fields inkl. aller Paare in der Konsole
-     * aus. Falls zu wenig Punkte vorhanden sind, wird ein Fehler in der
-     * Konsole ausgegeben
+    /**
+     * Gibt die kürzeste Distanz des {@code Fields} inkl aller {@code Pairs}
+     * in der Konsole aus. Falls zu wenig {@code Points} vorhanden sind,
+     * wird ein Fehler in der Konsole ausgegeben.
+     *
+     * @see     Field#distance()
+     * @see     closest_pairs_of_points.Pair
+     * @see     closest_pairs_of_points.Point
      */
     static void distance() {
         String result = field.distance();
@@ -81,8 +103,8 @@ final class ShellToField {
         }
     }
 
-    /*
-     * Gibt alle möglichen Kommandos in der Konsole aus
+    /**
+     * Gibt alle möglichen Kommandos in der Konsole aus.
      */
     static void help() {
         String[] commands = {"-----",
@@ -101,21 +123,25 @@ final class ShellToField {
         }
     }
 
-    /*
-     * Gibt eine spezielle Fehlernachricht in der Konsole aus
-     * @param message : Spezialisierung des Fehlers
+    /**
+     * Gibt eine spezielle Fehlernachricht in der Konsole aus.
+     *
+     * @param message       {@code String} der Fehlernachricht
      */
     static void printError(String message) {
         final String errorMessage = "Error!";
         System.out.println(errorMessage + " " + message);
     }
 
-    /*
-     * Prüft, ob alle nötigen Parameter ganze Zahlen sind
-     * @param tokens : String array der Länge 2 mit den Strings der
-     *               Parameter x, y
-     * @return parameters : null, falls ein Parameter keine ganze Zahl ist
-     *                    andernfalls Integer array der Länge 2 mit  x, y
+    /**
+     * Prüft, ob alle nötigen Parameter zu {@code int} konvertiert werden
+     * können.
+     *
+     * @param tokens        {@code String[] array} der Länge 2 mit den
+     *                      Parametern x, y als {@code String}
+     * @return              null, falls ein Parameter keine ganze Zahl ist.
+     *                      {@code int[] array} der Länge 2 mit Parameter x, y
+     *                      als {@code int} andernfalls.
      */
     private static Integer[] checkParameters(String[] tokens) {
         Integer[] parameters = new Integer[tokens.length];
